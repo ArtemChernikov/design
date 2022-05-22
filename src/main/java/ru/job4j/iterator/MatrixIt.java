@@ -42,21 +42,25 @@ public class MatrixIt implements Iterator<Integer> {
     @Override
     public boolean hasNext() {
         if (data.length != 1) {
-            while (column != data.length - 1) {
-                try {
-                    int x = data[column][row];
-                    return row != data[data.length - 1].length;
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    column++;
-                    row = 0;
-                }
+            if (data[column].length == row) {
+                column++;
+                row = 0;
             }
-            return row != data[data.length - 1].length;
+     if (data[column].length != 0) {
+         return row != data[data.length - 1].length;
+     } else {
+         while (data[column].length == 0) {
+             if (column == data.length - 1) {
+                 return false;
+             }
+             column++;
+             row = 0;
+         }
+     }
         }
-        try {
-            int x = data[column][row];
+        if (data[column].length != 0) {
             return true;
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } else {
             if (data.length == 1) {
                 return false;
             }
