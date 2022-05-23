@@ -41,11 +41,14 @@ public class MatrixIt implements Iterator<Integer> {
      */
     @Override
     public boolean hasNext() {
-        if (row == data[column].length) {
-            column++;
-            row = 0;
+        while (data[row].length == 0 || column == data[row].length) {
+            if (row == data.length - 1) {
+                return false;
+            }
+            row++;
+            column = 0;
         }
-        return row != data[data.length - 1].length;
+        return column != data[data.length - 1].length;
     }
 
     /**
@@ -60,10 +63,6 @@ public class MatrixIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        while (data[column].length == 0) {
-            column++;
-            row = 0;
-        }
-        return data[column][row++];
+        return data[row][column++];
     }
 }
