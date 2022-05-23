@@ -4,43 +4,49 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Класс модели шаблона итератора со свойствами <b>data</b> и <b>point</b>
- * Класс описывает итерации по массиву, по возрастанию
+ * Класс модели шаблона итератора со свойствами <b>data</b> и <b>index</b>
+ * Класс описывает итерации по массиву, только по четным числам
  *
  * @author ARTEM CHERNIKOV
  * @version 1.0
  */
-public class ArrayIt implements Iterator<Integer> {
+public class EvenNumbersIterator implements Iterator<Integer> {
     /**
      * Поле с массивом для проведения итераций
      */
-    private final int[] data;
+    private int[] data;
     /**
      * Поле точки на котором сейчас находится итератор
      */
-    private int point = 0;
+    private int index = 0;
 
     /**
      * Конструктор - создание нового объекта с определенными значениями
      *
      * @param data - массив
      */
-    public ArrayIt(int[] data) {
+    public EvenNumbersIterator(int[] data) {
         this.data = data;
     }
 
     /**
-     * Метод позволяет узнать, есть ли следующий элемент в массиве или нет
+     * Метод позволяет узнать, есть ли следующий четный элемент в массиве или нет
      *
      * @return - boolean true - если элемент имеется, false - если наоборот
      */
     @Override
     public boolean hasNext() {
-        return point < data.length;
+        int count = 0;
+        for (int i = index; i < data.length; i++) {
+            if (data[i] % 2 == 0) {
+                count++;
+            }
+        }
+        return count > 0;
     }
 
     /**
-     * Метод описывает возвращение следующего элемента массива,
+     * Метод описывает возвращение следующего четного элемента массива,
      * если он отсутствует и вызывается данный метод,
      * то выбрасывается исключение {@link NoSuchElementException}
      *
@@ -51,6 +57,9 @@ public class ArrayIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return data[point++];
+        while (data[index] % 2 != 0) {
+            index++;
+        }
+        return data[index++];
     }
 }

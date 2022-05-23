@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Класс модели шаблона итератора со свойствами <b>data</b> и <b>point</b>
- * Класс описывает итерацию массива по убыванию
+ * Класс описывает итерации по массиву, по убыванию
  *
  * @author ARTEM CHERNIKOV
  * @version 1.0
