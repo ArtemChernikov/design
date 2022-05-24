@@ -36,13 +36,13 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public boolean hasNext() {
-        int count = 0;
         for (int i = index; i < data.length; i++) {
             if (data[i] % 2 == 0) {
-                count++;
+                index = i;
+                return true;
             }
         }
-        return count > 0;
+        return false;
     }
 
     /**
@@ -56,9 +56,6 @@ public class EvenNumbersIterator implements Iterator<Integer> {
     public Integer next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
-        }
-        while (data[index] % 2 != 0) {
-            index++;
         }
         return data[index++];
     }
