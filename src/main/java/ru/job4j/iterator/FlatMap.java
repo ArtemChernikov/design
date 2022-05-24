@@ -34,7 +34,7 @@ public class FlatMap<T> implements Iterator<T> {
 
     /**
      * Метод позволяет узнать, есть ли следующий элемент в итераторе и во вложенном итераторе или нет
-     * Метод позволяет пропустить вложенный итератор, если он пуст c помощью рекурсии
+     * Метод позволяет пропустить вложенный итератор, если он пуст
      *
      * @return - boolean true - если элемент имеется, false - если наоборот
      */
@@ -42,7 +42,6 @@ public class FlatMap<T> implements Iterator<T> {
     public boolean hasNext() {
         while (!cursor.hasNext() && data.hasNext()) {
             cursor = data.next();
-            hasNext();
         }
         return cursor.hasNext();
     }
