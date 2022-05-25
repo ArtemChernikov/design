@@ -24,9 +24,7 @@ public final class MemStore<T extends Base> implements Store<T> {
      */
     @Override
     public void add(T model) {
-        if (storage.get(model.getId()) == null) {
-            storage.put(model.getId(), model);
-        }
+        storage.putIfAbsent(model.getId(), model);
     }
 
     /**
@@ -38,12 +36,7 @@ public final class MemStore<T extends Base> implements Store<T> {
      */
     @Override
     public boolean replace(String id, T model) {
-        boolean rsl = false;
-        if (storage.containsKey(id)) {
-            storage.put(id, model);
-            rsl = true;
-        }
-        return rsl;
+       return storage.replace(id, model) != null;
     }
 
     /**
@@ -54,12 +47,7 @@ public final class MemStore<T extends Base> implements Store<T> {
      */
     @Override
     public boolean delete(String id) {
-        boolean rsl = false;
-        if (storage.containsKey(id)) {
-            storage.remove(id);
-            rsl = true;
-        }
-        return rsl;
+        return storage.remove(id) != null;
     }
 
     /**
@@ -70,6 +58,6 @@ public final class MemStore<T extends Base> implements Store<T> {
      */
     @Override
     public T findById(String id) {
-        return storage.containsKey(id) ? storage.get(id) : null;
+        return storage.getOrDefault(id, null);
     }
 }
