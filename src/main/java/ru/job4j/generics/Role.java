@@ -1,4 +1,4 @@
-package generics;
+package ru.job4j.generics;
 
 /**
  * Класс описывает модель роли со свойством <b>roleName</b>

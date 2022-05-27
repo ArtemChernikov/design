@@ -1,4 +1,4 @@
-package generics;
+package ru.job4j.generics;
 
 /**
  * Класс описывает модель тигра, который наследуется от {@link Predator},

@@ -1,4 +1,4 @@
-package generics;
+package ru.job4j.generics;
 
 /**
  * Абстрактный класс описывает модель объекта со свойством <b>id</b>

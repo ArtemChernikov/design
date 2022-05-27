@@ -1,4 +1,4 @@
-package generics;
+package ru.job4j.generics;
 
 /**
  * Класс описывает модель пользователя со свойством <b>username</b>

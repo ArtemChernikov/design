@@ -1,4 +1,4 @@
-package generics;
+package ru.job4j.generics;
 
 /**
  * Класс описывает модель хранилища со свойством <b>store</b>
@@ -8,19 +8,19 @@ package generics;
  * @author ARTEM CHERNIKOV
  * @version 1.0
  */
-public class UserStore implements Store<User> {
+public class RoleStore implements Store<Role> {
     /**
      * Поле с объектом {@link MemStore} для использования его методов
      */
-    private final Store<User> store = new MemStore<>();
+    private final Store<Role> store = new MemStore<>();
 
     @Override
-    public void add(User model) {
+    public void add(Role model) {
         store.add(model);
     }
 
     @Override
-    public boolean replace(String id, User model) {
+    public boolean replace(String id, Role model) {
         return store.replace(id, model);
     }
 
@@ -30,7 +30,7 @@ public class UserStore implements Store<User> {
     }
 
     @Override
-    public User findById(String id) {
+    public Role findById(String id) {
         return store.findById(id);
     }
 }
