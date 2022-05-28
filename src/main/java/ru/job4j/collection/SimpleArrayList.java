@@ -17,11 +17,11 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     /**
      * Поле количества элементов в коллекции
      */
-    private int size;
+    private int size = 0;
     /**
      * Поле счетчика изменений в коллекции (добавление или удаление элементов)
      */
-    private int modCount;
+    private int modCount = 0;
 
     /**
      * Конструктор - создание нового объекта с определенным значением
