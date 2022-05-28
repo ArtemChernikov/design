@@ -62,8 +62,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
      */
     @Override
     public T set(int index, T newValue) {
-        Objects.checkIndex(index, container.length);
-        T rsl = container[index];
+        T rsl = get(index);
         container[index] = newValue;
         return rsl;
     }
@@ -81,8 +80,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
      */
     @Override
     public T remove(int index) {
-        Objects.checkIndex(index, container.length);
-        T rsl = container[index];
+        T rsl = get(index);
         System.arraycopy(container, index + 1, container, index, container.length - index - 1);
         container[size - 1] = null;
         size--;
@@ -117,9 +115,12 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     /**
      * Метод используется для расширения коллекции в два раза
      * 1) Для увеличения размера используем метод {@link Arrays#copyOf(int[], int)}
+     * 2) Если длина исходной коллекции равна 0, то чтобы увеличить размер
+     * к container.length прибавляем 1
      */
     public void increase() {
-        container = Arrays.copyOf(container, container.length * 2);
+        container = container.length > 0 ? Arrays.copyOf(container, container.length * 2)
+                : Arrays.copyOf(container, (container.length + 1) * 2);
     }
 
     /**
@@ -141,11 +142,15 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
             /**
              * Метод позволяет узнать, есть ли следующий элемент в коллекции
-             *
+             * 1) Проверяем изменилась ли наша коллекция за время работы итератора
+             * если изменилась, то выбрасывается исключение {@link ConcurrentModificationException}
              * @return - true - если следующий элемент есть, false - если нет
              */
             @Override
             public boolean hasNext() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
                 return iteratorIndex < size;
             }
 
@@ -154,9 +159,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
              * и возврата соответствующего значения
              * 1) Проверяем методом {@link Iterator#hasNext()} есть ли следующий элемент в коллекции
              * если нет, то выбрасывается {@link NoSuchElementException}
-             * 2) Проверяем изменилась ли наша коллекция за время работы итератора
-             * если изменилась, то выбрасывается исключение {@link ConcurrentModificationException}
-             * 3) Возвращаем следующий элемент коллекции
+             * 2) Возвращаем следующий элемент коллекции
              *
              * @return - возвращаем следующий элемент коллекции
              */
@@ -164,9 +167,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             public T next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
-                }
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
                 }
                 return container[iteratorIndex++];
             }
