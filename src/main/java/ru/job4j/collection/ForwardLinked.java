@@ -41,6 +41,21 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     /**
+     * Метод используется для добавление узла на первое место в коллекции
+     * 1) Проверяется пустая коллекция или нет, если пустая, присваиваем {@link ForwardLinked#head} новый узел
+     * 2) Если коллекция не пустая, присваиваем новый узел, где ссылкой на следующий узел будет, старый первый узел
+     *
+     * @param value - добавляемый элемент
+     */
+    public void addFirst(T value) {
+        if (head == null) {
+            head = new Node<>(value, null);
+            return;
+        }
+        head = new Node<>(value, head);
+    }
+
+    /**
      * Метод используется для удаления первого узла колеекции
      * 1) Создаем локальную переменную rsl и присваиваем ей первый узел
      * 2) Если rsl == null, то выбрасываем {@link NoSuchElementException}
