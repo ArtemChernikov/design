@@ -45,18 +45,20 @@ public class ForwardLinked<T> implements Iterable<T> {
      * 1) Создаем локальную переменную rsl и присваиваем ей первый узел
      * 2) Если rsl == null, то выбрасываем {@link NoSuchElementException}
      * 3) Присваиваем {@link ForwardLinked#head} узел, который идет после head
-     * 4) Обнуляем ссылку на следующий узел старого первого узла
+     * 4) Обнуляем ссылку на следующий узел и элемент старого первого узла
      *
      * @return - возвращает элемент удаленного узла
      */
     public T deleteFirst() {
-        final Node<T> rsl = head;
-        if (rsl == null) {
+        final Node<T> node = head;
+        if (node == null) {
             throw new NoSuchElementException();
         }
-        head = rsl.next;
-        rsl.next = null;
-        return rsl.value;
+        T rsl = head.value;
+        head = node.next;
+        node.next = null;
+        node.value = null;
+        return rsl;
     }
 
     /**
