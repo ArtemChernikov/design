@@ -48,11 +48,7 @@ public class ForwardLinked<T> implements Iterable<T> {
      * @param value - добавляемый элемент
      */
     public void addFirst(T value) {
-        if (head == null) {
-            head = new Node<>(value, null);
-            return;
-        }
-        head = new Node<>(value, head);
+        head = head == null ? new Node<>(value, null) : new Node<>(value, head);
     }
 
     /**
