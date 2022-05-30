@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
  */
 public class ForwardLinked<T> implements Iterable<T> {
     /**
-     * Поле первого узла коллекции
+     * Поле первый узел коллекции
      */
     private Node<T> head;
 
@@ -50,7 +50,7 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     /**
-     * Метод используется для удаления первого узла колеекции
+     * Метод используется для удаления первого узла коллекции
      * 1) Создаем локальную переменную rsl и присваиваем ей первый узел
      * 2) Если rsl == null, то выбрасываем {@link NoSuchElementException}
      * 3) Присваиваем {@link ForwardLinked#head} узел, который идет после head
@@ -79,7 +79,7 @@ public class ForwardLinked<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return new Iterator<>() {
             /**
-             * Поле для указателя узла, на котором сейчас находится итератор
+             * Поле указатель узла, на котором сейчас находится итератор
              */
             Node<T> node = head;
 
