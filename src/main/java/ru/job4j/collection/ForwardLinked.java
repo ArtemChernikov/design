@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * В классе используется вложенный класс {@link ForwardLinked.Node}
  *
  * @author ARTEM CHERNIKOV
- * @version 1.0
+ * @version 1.1
  */
 public class ForwardLinked<T> implements Iterable<T> {
     /**
@@ -42,13 +42,11 @@ public class ForwardLinked<T> implements Iterable<T> {
 
     /**
      * Метод используется для добавление узла на первое место в коллекции
-     * 1) Проверяется пустая коллекция или нет, если пустая, присваиваем {@link ForwardLinked#head} новый узел
-     * 2) Если коллекция не пустая, присваиваем новый узел, где ссылкой на следующий узел будет, старый первый узел
      *
      * @param value - добавляемый элемент
      */
     public void addFirst(T value) {
-        head = head == null ? new Node<>(value, null) : new Node<>(value, head);
+        head = new Node<>(value, head);
     }
 
     /**
