@@ -86,10 +86,10 @@ public class ForwardLinked<T> implements Iterable<T> {
      * и temp не будет равен последнему элементу)
      * 6) Присваиваем {@link ForwardLinked#head} значение temp
      *
-     * @return - возвращает boolean true - если в коллекции больше 1 элемента (значит перестановка успешна)
-     * false - если наоборот
+     * @return - возвращает boolean true - если в коллекции успешно призведен ревёрс, false - если нет
      */
     public boolean revert() {
+        boolean rsl = false;
         if (head != null && head.next != null) {
             Node<T> current = head;
             Node<T> temp = null;
@@ -100,8 +100,9 @@ public class ForwardLinked<T> implements Iterable<T> {
                 current = next;
             }
             head = temp;
+            rsl = true;
         }
-        return head != null && head.next != null;
+        return rsl;
     }
 
     /**
