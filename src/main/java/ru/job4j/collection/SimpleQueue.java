@@ -23,14 +23,14 @@ public class SimpleQueue<T> {
     /**
      * Метод используется для удаления первого элемента в очереди
      * Использует внутри методы {@link SimpleStack#push(Object)} и {@link SimpleStack#pop()}
-     * 1) Проверяем не пустой ли {@link SimpleQueue#in}, если он пуст, выкидываем {@link NoSuchElementException}
+     * 1) Проверяем не пустые ли стеки, если они пусты, выкидываем {@link NoSuchElementException}
      * 2) Если {@link SimpleQueue#out} пуст, то перекидываем в него все элементы из {@link SimpleQueue#in}
      * 3) Удаляем и возвращаем последний элемент из {@link SimpleQueue#out}
      *
      * @return - возвращает удаленный элемент
      */
     public T poll() {
-        if (in.isEmpty()) {
+        if (in.isEmpty() && out.isEmpty()) {
             throw new NoSuchElementException();
         }
         if (out.isEmpty()) {
