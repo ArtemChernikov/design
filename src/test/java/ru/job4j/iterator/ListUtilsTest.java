@@ -31,8 +31,8 @@ public class ListUtilsTest {
         assertThat(input, is(Arrays.asList(0, 1, 2, 3)));
     }
 
-    @Test (expected = IndexOutOfBoundsException.class)
-    public void whenAddAfterLastWithInvalidIndex () {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenAddAfterLastWithInvalidIndex() {
         List<Integer> input = new ArrayList<>(Arrays.asList(0, 1, 2));
         ListUtils.addAfter(input, 10, 3);
         assertThat(input, is(Arrays.asList(0, 1, 2, 3)));
@@ -48,14 +48,14 @@ public class ListUtilsTest {
     @Test
     public void whenRemoveIfNegativeNumbers() {
         List<Integer> input = new ArrayList<>(Arrays.asList(0, 1, 2, -3, 4, -5, 6, 7, 8, -9));
-        ListUtils.removeIf(input, x-> x < 0);
+        ListUtils.removeIf(input, x -> x < 0);
         assertThat(input, is(Arrays.asList(0, 1, 2, 4, 6, 7, 8)));
     }
 
     @Test
     public void whenReplacePositiveNumbers() {
         List<Integer> input = new ArrayList<>(Arrays.asList(0, 1, 2, -3, 4, -5, 6, 7, 8, -9));
-        ListUtils.replaceIf(input, x-> x >= 0, -1);
+        ListUtils.replaceIf(input, x -> x >= 0, -1);
         assertThat(input, is(Arrays.asList(-1, -1, -1, -3, -1, -5, -1, -1, -1, -9)));
     }
 
