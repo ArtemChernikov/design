@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * В классе используется вложенный класс {@link ForwardLinked.Node}
  *
  * @author ARTEM CHERNIKOV
- * @version 1.1
+ * @version 1.2
  */
 public class ForwardLinked<T> implements Iterable<T> {
     /**
@@ -68,6 +68,40 @@ public class ForwardLinked<T> implements Iterable<T> {
         node.next = null;
         node.value = null;
         return rsl;
+    }
+
+    /**
+     * Метод используется для перестановки элементов связного списка в обратном порядке
+     * 1) Проверяем сколько элементов в коллекции, если 0 или 1, то перестановка бессмысленна
+     * 2) Если в коллекции больше одного элемента:
+     * 3) Создаем локальную переменную current (текущий) - она будет отвечать за текущий элемент
+     * 4) Создаем локальную переменную temp (временный) - она будет отвечать за перестановку ссылок в элементах
+     * 5) Запускаем цикл пока current элемент не равен null (он будет равен null, когда мы дойдем до конца)
+     * 5.1 Создаем локальную переменную next (следующий) - она отвечает за следующий элемент после текущего
+     * 5.2 Присваиваем current элементу ссылку current.next на следующий элемент temp
+     * 5.3 Присваиваем temp элементу значение текущего элемента, для передачи ссылки в след. итерации
+     * 5.4 Присваиваем current элементу значение next следующего элемента, для перехода на другой
+     * элемент в следующей итерации
+     * 5.5 И так пока не дойдем до конца коллекции (пока current элемент не будет равен null
+     * и temp не будет равен последнему элементу)
+     * 6) Присваиваем {@link ForwardLinked#head} значение temp
+     *
+     * @return - возвращает boolean true - если в коллекции больше 1 элемента (значит перестановка успешна)
+     * false - если наоборот
+     */
+    public boolean revert() {
+        if (head != null && head.next != null) {
+            Node<T> current = head;
+            Node<T> temp = null;
+            while (current != null) {
+                Node<T> next = current.next;
+                current.next = temp;
+                temp = current;
+                current = next;
+            }
+            head = temp;
+        }
+        return head != null && head.next != null;
     }
 
     /**
@@ -143,6 +177,14 @@ public class ForwardLinked<T> implements Iterable<T> {
         public Node(T value, Node<T> next) {
             this.value = value;
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{"
+                    + "value=" + value
+                    + ", next=" + next
+                    + '}';
         }
     }
 }
