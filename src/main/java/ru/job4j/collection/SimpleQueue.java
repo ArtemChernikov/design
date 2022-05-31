@@ -1,5 +1,7 @@
 package ru.job4j.collection;
 
+import java.util.NoSuchElementException;
+
 /**
  * Класс описывает модель очереди со свойствами <b>in</b> и <b>out</b>
  * В классе используется модель стека {@link SimpleStack}
@@ -32,14 +34,15 @@ public class SimpleQueue<T> {
      * @return - возвращает удаленный элемент
      */
     public T poll() {
-        while (!out.isEmpty()) {
-            in.push(out.pop());
+        if (in.isEmpty()) {
+            throw new NoSuchElementException();
         }
-        T rsl = in.pop();
-        while (!in.isEmpty()) {
-            push(in.pop());
+        if (out.isEmpty()) {
+            while (!in.isEmpty()) {
+                out.push(in.pop());
+            }
         }
-        return rsl;
+        return out.pop();
     }
 
     /**
@@ -49,6 +52,6 @@ public class SimpleQueue<T> {
      * @param value - элемент
      */
     public void push(T value) {
-        out.push(value);
+        in.push(value);
     }
 }
