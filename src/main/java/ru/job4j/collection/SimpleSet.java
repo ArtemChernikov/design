@@ -1,6 +1,7 @@
 package ru.job4j.collection;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Класс описывает модель коллекции Set со свойством <b>set</b>
@@ -24,10 +25,9 @@ public class SimpleSet<T> implements Set<T> {
      */
     @Override
     public boolean add(T value) {
-        boolean rsl = false;
-        if (!contains(value)) {
+        boolean rsl = !contains(value);
+        if (rsl) {
             set.add(value);
-            rsl = true;
         }
         return rsl;
     }
@@ -41,19 +41,10 @@ public class SimpleSet<T> implements Set<T> {
     @Override
     public boolean contains(T value) {
         boolean rsl = false;
-        if (value != null) {
-            for (T e : set) {
-                if (e != null && e.equals(value)) {
-                    rsl = true;
-                    break;
-                }
-            }
-        } else {
-            for (T e : set) {
-                if (e == null) {
-                    rsl = true;
-                    break;
-                }
+        for (T e : set) {
+            if (Objects.equals(e, value)) {
+                rsl = true;
+                break;
             }
         }
         return rsl;
