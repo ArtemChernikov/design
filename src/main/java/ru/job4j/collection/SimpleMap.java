@@ -1,6 +1,5 @@
 package ru.job4j.collection;
 
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -68,7 +67,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
      * @return - возвращает хэш-код
      */
     private int hash(int hashCode) {
-        return hashCode ^ (hashCode >>> capacity);
+        return hashCode ^ (hashCode >>> 16);
     }
 
     /**
@@ -83,10 +82,18 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     /**
      * Метод используется для увеличения вместимости внутреннего массива коллекции в два раза
+     * путем создания нового массива и рехеширования каждого элемента
      */
     private void expand() {
-        capacity = capacity * 2;
-        table = Arrays.copyOf(table, capacity);
+        int newSize = capacity * 2;
+        MapEntry<K, V>[] newTable = new MapEntry[newSize];
+        capacity = newSize;
+        for (MapEntry<K, V> element : table) {
+            if (element != null) {
+                newTable[indexFor(hash(element.key.hashCode()))] = element;
+            }
+        }
+        table = newTable;
     }
 
     /**
@@ -141,6 +148,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
              * Поле индекс
              */
             private int iteratorIndex = 0;
+            /**
+             * Поле счетчик элементов
+             */
+            private int iteratorCount = 1;
 
             /**
              * Метод позволяет узнать, есть ли следующий элемент в коллекции
@@ -153,7 +164,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return iteratorIndex < count;
+                while (table[iteratorIndex] == null && count > 0 && iteratorCount < count) {
+                    iteratorIndex++;
+                }
+                return iteratorCount <= count;
             }
 
             /**
@@ -170,6 +184,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
+                iteratorCount++;
                 return table[iteratorIndex++].key;
             }
         };

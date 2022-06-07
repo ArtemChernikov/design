@@ -35,7 +35,7 @@ public class SimpleMapTest {
         map.put(42, "Evgeniy");
         map.put(11, "Jordan");
         map.put(25, "Maxim");
-        assertTrue(map.put(543, "Maxim"));
+        assertTrue(map.put(22, "Maxim"));
     }
 
     @Test
