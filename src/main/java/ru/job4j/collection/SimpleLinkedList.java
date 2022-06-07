@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
- * Класс описывает модель коллекции LinkedList со свойствами <b>head</b>, <b>tail</b>, <b>size</b> и <b>modCount</b>
+ * Класс описывает модель односвязного списка со свойствами <b>head</b>, <b>tail</b>, <b>size</b> и <b>modCount</b>
  * Класс реализовывает интерфейс {@link LinkedList}
  * В классе используется вложенный класс {@link Node}
  *
