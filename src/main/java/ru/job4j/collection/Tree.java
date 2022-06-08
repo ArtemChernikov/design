@@ -9,7 +9,7 @@ import java.util.Optional;
  * простую реализацию структуры дерева с дефолтными методами
  *
  * @author ARTEM CHERNIKOV
- * @version 1.0
+ * @version 1.1
  */
 public interface Tree<E> {
     /**
@@ -20,6 +20,13 @@ public interface Tree<E> {
      * @return - возвращает boolean
      */
     boolean add(E parent, E child);
+
+    /**
+     * Метод для проверки бинарное дерево или нет
+     *
+     * @return - возвращает boolean
+     */
+    boolean isBinary();
 
     /**
      * Метод для поиска элемента
