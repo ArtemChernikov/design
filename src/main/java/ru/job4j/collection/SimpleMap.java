@@ -148,10 +148,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
              * Поле индекс
              */
             private int iteratorIndex = 0;
-            /**
-             * Поле счетчик элементов
-             */
-            private int iteratorCount = 1;
 
             /**
              * Метод позволяет узнать, есть ли следующий элемент в коллекции
@@ -164,10 +160,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                while (table[iteratorIndex] == null && count > 0 && iteratorCount < count) {
+                while (iteratorIndex < table.length && table[iteratorIndex] == null) {
                     iteratorIndex++;
                 }
-                return iteratorCount <= count;
+                return iteratorIndex < table.length - 1;
             }
 
             /**
@@ -184,7 +180,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                iteratorCount++;
                 return table[iteratorIndex++].key;
             }
         };
