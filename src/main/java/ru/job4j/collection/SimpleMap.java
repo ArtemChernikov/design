@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Класс описывает модель коллекции HashMap (разрешения проблем коллизий) со свойствами <b>LOAD_FACTOR</b>,
+ * Класс описывает модель коллекции HashMap (без разрешения проблем коллизий) со свойствами <b>LOAD_FACTOR</b>,
  * <b>capacity</b>, <b>count</b>, <b>modCount</b> и <b>table</b>
  * Класс реализовывает интерфейс {@link SimpleMap}
  *
