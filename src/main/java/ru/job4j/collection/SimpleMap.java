@@ -163,7 +163,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 while (iteratorIndex < table.length && table[iteratorIndex] == null) {
                     iteratorIndex++;
                 }
-                return iteratorIndex < table.length - 1;
+                return iteratorIndex <= table.length - 1;
             }
 
             /**
