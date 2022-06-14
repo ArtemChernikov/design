@@ -23,7 +23,7 @@ public class ResultFile {
                     writer.write(System.lineSeparator());
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
