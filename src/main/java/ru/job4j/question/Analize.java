@@ -8,6 +8,9 @@ import java.util.Set;
 /**
  * Класс описывает модель анализа изменений двух множеств
  * В класее используются {@link User} и {@link Info}
+ *
+ * @author ARTEM CHERNIKOV
+ * @version 1.0
  */
 public class Analize {
     /**
