@@ -23,7 +23,7 @@ public class LogFilter {
      */
     public List<String> filter(String file) {
         List<String> result = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("log.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             result = br.lines().filter(x -> x.contains(" 404 ")).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
