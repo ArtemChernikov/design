@@ -1,8 +1,6 @@
 package ru.job4j.io;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +9,7 @@ import java.util.stream.Collectors;
  * Класс описывает пример чтения из файла с помощью {@link BufferedReader}
  *
  * @author ARTEM CHERNIKOV
- * @version 1.0
+ * @version 1.1
  */
 public class LogFilter {
     /**
@@ -31,9 +29,25 @@ public class LogFilter {
         return result;
     }
 
+    /**
+     * Метод используется для записи строк в файл
+     *
+     * @param log  - список строк
+     * @param file - файл для записи
+     */
+    public static void save(List<String> log, String file) {
+        try (PrintWriter writer = new PrintWriter(new BufferedOutputStream(new FileOutputStream(file)))) {
+            for (String s : log) {
+                writer.println(s);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
         List<String> log = logFilter.filter("log.txt");
-        System.out.println(log);
+        save(log, "404.txt");
     }
 }
