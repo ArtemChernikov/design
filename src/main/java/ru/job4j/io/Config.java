@@ -48,15 +48,15 @@ public class Config {
     public void load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             reader.lines()
-                    .filter(x -> !x.startsWith("#"))
                     .filter(x -> x.length() > 0)
+                    .filter(x -> !x.startsWith("#"))
                     .forEach(i -> {
                         if (!i.contains("=")) {
-                            throw new IllegalArgumentException();
+                            throw new IllegalArgumentException("Неккоректная пара");
                         }
                         String[] ar = i.split("=", 2);
-                        if (ar[0].equals("") || ar[1].equals("")) {
-                            throw new IllegalArgumentException();
+                        if (ar[0].isEmpty() || ar[1].isEmpty()) {
+                            throw new IllegalArgumentException("Неккоректная пара");
                         }
                         values.put(ar[0], ar[1]);
                     });
