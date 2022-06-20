@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * @author ARTEM CHERNIKOV
- * @version 1.0
+ * @version 1.1
  */
 public class Dir {
     /**
@@ -13,7 +13,10 @@ public class Dir {
      * @param args - аргументы командной строки
      */
     public static void main(String[] args) {
-        File file = new File("c:\\projects");
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+        }
+        File file = new File(args[0]);
         if (!file.exists()) {
             throw new IllegalArgumentException(String.format("Not exist %s", file.getAbsoluteFile()));
         }

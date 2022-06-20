@@ -9,14 +9,16 @@ import java.util.function.Predicate;
 
 /**
  * Класс демонстрирует сканирование файловой системы
+ * Используется класс {@link SearchFiles}
  *
  * @author ARTEM CHERNIKOV
- * @version 1.0
+ * @version 1.1
  */
 public class Search {
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get(".");
-        search(start, p -> p.toFile().getName().endsWith(".js")).forEach(System.out::println);
+        inputValid(args);
+        Path start = Paths.get(args[0]);
+        search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
     /**
@@ -31,5 +33,17 @@ public class Search {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
+    }
+
+    /**
+     * Метод используется для валидации входных параметров запуска,
+     * если аргументы запуска отсутствуют, то выбрасывается исключение {@link IllegalArgumentException}
+     *
+     * @param args - аргументы запуска
+     */
+    public static void inputValid(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Root folder is null. Usage java -jar search.jar ROOT_FOLDER.");
+        }
     }
 }
