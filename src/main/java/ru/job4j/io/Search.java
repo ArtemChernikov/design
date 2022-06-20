@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,8 +43,15 @@ public class Search {
      * @param args - аргументы запуска
      */
     public static void inputValid(String[] args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("Root folder is null. Usage java -jar search.jar ROOT_FOLDER.");
+        if (args.length < 2) {
+            throw new IllegalArgumentException("Добавьте два входных параметра запуска.");
+        }
+        File file = new File(args[0]);
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException("Указан неккоректный путь в первом параметре запуска, укажите директорию");
+        }
+        if (!args[1].startsWith(".")) {
+            throw new IllegalArgumentException("Укажите корректное расширение файла втором параметре запуска");
         }
     }
 }
