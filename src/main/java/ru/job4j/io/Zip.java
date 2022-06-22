@@ -23,9 +23,8 @@ public class Zip {
     /**
      * Метод используется для упаковки в архив файлов и папок из списка в файл назначения
      * 1) Проходимся по списку с путями циклом
-     * 2) Каждый путь проверяется абсолютный он или нет
-     * 3) Добавляем файл (без содержимого) или директорию в архив
-     * 4) Добавляем содержимое файла или директории в архив
+     * 2) Добавляем файл (без содержимого) или директорию в архив
+     * 3) Добавляем содержимое файла или директории в архив
      *
      * @param sources - список с путями папок и файлов
      * @param target  - архив
@@ -33,9 +32,8 @@ public class Zip {
     public void packFiles(List<Path> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             for (Path path : sources) {
-                String p = path.isAbsolute() ? String.valueOf(path) : String.valueOf(path.toAbsolutePath());
-                zip.putNextEntry(new ZipEntry(p));
-                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(p))) {
+                zip.putNextEntry(new ZipEntry(path.toFile().getPath()));
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(path.toFile()))) {
                     zip.write(out.readAllBytes());
                 } catch (IOException c) {
                     c.printStackTrace();
@@ -63,18 +61,41 @@ public class Zip {
         }
     }
 
-    public static void main(String[] args) {
-        ArgsName arg = ArgsName.of(args);
-        Zip zip = new Zip();
-        if (new File(arg.get("d")).exists()) {
-            try {
-                zip.packFiles(search(Paths.get(arg.get("d")), p -> !p.endsWith(arg.get("e"))),
-                        new File(arg.get("o")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
+    /**
+     * Метод используется для валидации входных параметров запуска
+     *
+     * @param args - входные параметры запуска
+     * @return - возвращает {@link ArgsName}
+     */
+    public static ArgsName inputValidate(String[] args) {
+        if (args.length < 3) {
+            throw new IllegalArgumentException("Добавьте три входных параметра запуска.");
+        }
+        ArgsName argsName = ArgsName.of(args);
+        if (!new File(argsName.get("d")).exists()) {
             throw new IllegalArgumentException("Такой папки не существует");
+        }
+        if (!Paths.get(argsName.get("d")).isAbsolute()) {
+            throw new IllegalArgumentException("Указан относительный путь в первом параметре запуска, укажите абсолютный");
+        }
+        if (!argsName.get("o").contains(".")) {
+            throw new IllegalArgumentException("Укажите корректный путь к файлу");
+        }
+        String[] array = argsName.get("o").split("\\.");
+        if (array[0].isEmpty() || array[1].isEmpty()) {
+            throw new IllegalArgumentException("Укажите корректный путь к файлу");
+        }
+        return argsName;
+    }
+
+    public static void main(String[] args) {
+        ArgsName arg = inputValidate(args);
+        Zip zip = new Zip();
+        try {
+            zip.packFiles(search(Paths.get(arg.get("d")), p -> !p.toFile().getName().endsWith(arg.get("e"))),
+                    new File(arg.get("o")));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

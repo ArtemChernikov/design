@@ -51,7 +51,7 @@ public class Search {
             throw new IllegalArgumentException("Указан неккоректный путь в первом параметре запуска, укажите директорию");
         }
         if (!args[1].startsWith(".")) {
-            throw new IllegalArgumentException("Укажите корректное расширение файла втором параметре запуска");
+            throw new IllegalArgumentException("Укажите корректное расширение файла во втором параметре запуска");
         }
     }
 }
