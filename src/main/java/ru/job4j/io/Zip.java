@@ -72,14 +72,12 @@ public class Zip {
             throw new IllegalArgumentException("Добавьте три входных параметра запуска.");
         }
         ArgsName argsName = ArgsName.of(args);
-        if (!new File(argsName.get("d")).exists()) {
-            throw new IllegalArgumentException("Такой папки не существует");
-        }
-        if (!Paths.get(argsName.get("d")).isAbsolute()) {
-            throw new IllegalArgumentException("Указан относительный путь в первом параметре запуска, укажите абсолютный");
+        File file = new File(argsName.get("d"));
+        if (!file.exists() || !file.isDirectory()) {
+            throw new IllegalArgumentException("Укажите корректный путь к архивируемой папке");
         }
         if (!argsName.get("o").contains(".")) {
-            throw new IllegalArgumentException("Укажите корректный путь к файлу");
+            throw new IllegalArgumentException("Укажите корректный путь к файлу архива");
         }
         String[] array = argsName.get("o").split("\\.");
         if (array[0].isEmpty() || array[1].isEmpty()) {
