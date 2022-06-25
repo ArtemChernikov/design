@@ -84,8 +84,8 @@ public class ConsoleChat {
                     works = false;
                     process = false;
                 }
-                if (question.equals(CONTINUE) || question.equals(STOP)) {
-                    process = question.equals(CONTINUE);
+                if (CONTINUE.equals(question) || STOP.equals(question)) {
+                    process = CONTINUE.equals(question);
                 }
                 if (process) {
                     String answer = answers.get((int) (Math.random() * answers.size()));
@@ -124,7 +124,8 @@ public class ConsoleChat {
     private void saveLog(List<String> log) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             for (String str : log) {
-                writer.write(str + System.lineSeparator());
+                writer.write(str);
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
