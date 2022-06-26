@@ -1,16 +1,8 @@
 package ru.job4j.io;
 
-import net.sf.saxon.trans.SymbolicName;
-
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.*;
-import java.util.stream.Collectors;
 
-/**
- * -path=file.csv -delimiter=";"  -out=stdout -filter=name,age
- */
 public class CSVReader {
     public static void handle(ArgsName argsName) {
         String[] filter = argsName.get("filter").split(",");
