@@ -1,61 +1,60 @@
 package ru.job4j.io;
 
-import java.io.*;
-import java.util.*;
+import net.sf.saxon.trans.SymbolicName;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * -path=file.csv -delimiter=";"  -out=stdout -filter=name,age
+ */
 public class CSVReader {
     public static void handle(ArgsName argsName) {
         String[] filter = argsName.get("filter").split(",");
-        try (Scanner readScanner = new Scanner(new FileReader(argsName.get("path")));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(argsName.get("out")))) {
+        String out = argsName.get("out");
+        boolean outConsole = "stdout".equals(argsName.get("out"));
+        try (Scanner readScanner = new Scanner(new FileReader(argsName.get("path")))) {
+            File tempFile = File.createTempFile("temp", ".csv", new File("C:\\projects\\job4j_design"));
+            String realOut = outConsole ? tempFile.getPath() : out;
+            BufferedWriter writer = new BufferedWriter(new FileWriter(realOut));
             String[] keys = readScanner.nextLine().split(argsName.get("delimiter"));
-            String path = argsName.get("out");
-            if ("stdout".equals(path)) {
-                for (int i = 0; i < filter.length; i++) {
-                    System.out.print(filter[i]);
-                    if (i != filter.length - 1) {
-                        System.out.print(argsName.get("delimiter"));
-                    } else {
-                        System.out.println();
-                    }
+            for (int i = 0; i < filter.length; i++) {
+                writer.write(filter[i]);
+                if (i != filter.length - 1) {
+                    writer.write(argsName.get("delimiter"));
+                } else {
+                    writer.newLine();
                 }
-                while (readScanner.hasNext()) {
-                    String[] values = readScanner.nextLine().split(argsName.get("delimiter"));
-                    for (int i = 0; i < filter.length; i++) {
-                        System.out.print(values[indexOf(filter[i], keys)]);
-                        if (i != filter.length - 1) {
-                            System.out.print(argsName.get("delimiter"));
-                        } else {
-                            System.out.println();
-                        }
-                    }
-                }
-            } else {
+            }
+            while (readScanner.hasNext()) {
+                String[] values = readScanner.nextLine().split(argsName.get("delimiter"));
                 for (int i = 0; i < filter.length; i++) {
-                    writer.write(filter[i]);
+                    writer.write(values[indexOf(filter[i], keys)]);
                     if (i != filter.length - 1) {
                         writer.write(argsName.get("delimiter"));
                     } else {
                         writer.newLine();
                     }
                 }
-                while (readScanner.hasNext()) {
-                    String[] values = readScanner.nextLine().split(argsName.get("delimiter"));
-                    for (int i = 0; i < filter.length; i++) {
-                        writer.write(values[indexOf(filter[i], keys)]);
-                        if (i != filter.length - 1) {
-                            writer.write(argsName.get("delimiter"));
-                        } else {
-                            writer.newLine();
-                        }
+            }
+            if (outConsole) {
+                try (Scanner reader = new Scanner(new FileReader(tempFile.getName()))) {
+                    while (reader.hasNext()) {
+                        System.out.println(reader.nextLine());
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
+            tempFile.deleteOnExit();
+            writer.close();
         } catch (
                 IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private static int indexOf(String filter, String[] keys) {
@@ -69,13 +68,14 @@ public class CSVReader {
         return rsl;
     }
 
-    public ArgsName inputValidate(String[] args) {
+    public static ArgsName inputValidate(String[] args) {
         if (args.length < 4) {
             throw new IllegalArgumentException("Добавьте четыре входных параметра запуска.");
         }
         ArgsName argsName = ArgsName.of(args);
-        if (!new File(argsName.get("path")).getName().endsWith(".csv")) {
-            throw new IllegalArgumentException("Укажите файл с расширением .csv");
+        File file = new File(argsName.get("path"));
+        if (!file.exists() || !file.isFile() || !file.getName().endsWith(".csv")) {
+            throw new IllegalArgumentException("Первый параметр запуска должен быть корректен");
         }
         if (argsName.get("delimiter").isEmpty()) {
             throw new IllegalArgumentException("Укажите корректный разделитель строк");
@@ -87,5 +87,10 @@ public class CSVReader {
             throw new IllegalArgumentException("Укажите корректный фильтр столбцов");
         }
         return argsName;
+    }
+
+    public static void main(String[] args) {
+        ArgsName argsName = inputValidate(args);
+        handle(argsName);
     }
 }
