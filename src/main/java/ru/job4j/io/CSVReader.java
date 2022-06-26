@@ -7,41 +7,28 @@ public class CSVReader {
     public static void handle(ArgsName argsName) {
         String[] filter = argsName.get("filter").split(",");
         String out = argsName.get("out");
-        boolean outConsole = "stdout".equals(argsName.get("out"));
         try (Scanner readScanner = new Scanner(new FileReader(argsName.get("path")))) {
-            File tempFile = File.createTempFile("temp", ".csv", new File("C:\\projects\\job4j_design"));
-            String realOut = outConsole ? tempFile.getPath() : out;
-            BufferedWriter writer = new BufferedWriter(new FileWriter(realOut));
+            PrintStream writer = new PrintStream("stdout".equals(argsName.get("out")) ? System.out : new FileOutputStream(out));
             String[] keys = readScanner.nextLine().split(argsName.get("delimiter"));
             for (int i = 0; i < filter.length; i++) {
-                writer.write(filter[i]);
+                writer.write(filter[i].getBytes());
                 if (i != filter.length - 1) {
-                    writer.write(argsName.get("delimiter"));
+                    writer.write(argsName.get("delimiter").getBytes());
                 } else {
-                    writer.newLine();
+                    writer.println();
                 }
             }
             while (readScanner.hasNext()) {
                 String[] values = readScanner.nextLine().split(argsName.get("delimiter"));
                 for (int i = 0; i < filter.length; i++) {
-                    writer.write(values[indexOf(filter[i], keys)]);
+                    writer.write(values[indexOf(filter[i], keys)].getBytes());
                     if (i != filter.length - 1) {
-                        writer.write(argsName.get("delimiter"));
+                        writer.write(argsName.get("delimiter").getBytes());
                     } else {
-                        writer.newLine();
+                        writer.println();
                     }
                 }
             }
-            if (outConsole) {
-                try (Scanner reader = new Scanner(new FileReader(tempFile.getName()))) {
-                    while (reader.hasNext()) {
-                        System.out.println(reader.nextLine());
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            tempFile.deleteOnExit();
             writer.close();
         } catch (
                 IOException e) {
