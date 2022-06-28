@@ -25,7 +25,7 @@ public class EchoServer {
     /**
      * Поле лог
      */
-    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(9000)) {
