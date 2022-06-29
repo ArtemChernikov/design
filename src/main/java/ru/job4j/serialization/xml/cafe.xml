@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<cafe name="LuxuryCafe" open="true" tables="30">
+    <adress city="Moscow" street="Ubileynaya" house="30" apartment="4"/>
+    <dishes>
+        <dish>Borsh</dish>>
+        <dish>ChikenSoup</dish>>
+        <dish>CheeseCake</dish>>
+    </dishes>
+</cafe>
