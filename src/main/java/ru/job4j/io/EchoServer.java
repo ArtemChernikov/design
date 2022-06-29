@@ -39,9 +39,14 @@ public class EchoServer {
                         System.out.println(str);
                         if (str.contains("msg=")) {
                             switch (str) {
-                                case "GET " + "/?msg=Hello" + " HTTP/1.1" -> out.write("Hello\r\n\r\n".getBytes());
-                                case "GET " + "/?msg=Exit" + " HTTP/1.1" -> server.close();
-                                default -> out.write("What\r\n\r\n".getBytes());
+                                case "GET /?msg=Hello HTTP/1.1":
+                                    out.write("Hello\r\n\r\n".getBytes());
+                                    break;
+                                case "GET /?msg=Exit HTTP/1.1":
+                                    server.close();
+                                    break;
+                                default:
+                                    out.write("What\r\n\r\n".getBytes());
                             }
                         }
                     }
