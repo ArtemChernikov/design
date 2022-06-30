@@ -21,19 +21,25 @@ public class Main {
         try {
             Cafe cafe = new Cafe("LuxuryCafe", new Address("Moscow", "Ubileynaya", 30, 4),
                     true, 30, new String[]{"Borsh", "ChikenSoup", "CheeseCake", "Sandwich"});
+            /* Получаем контекст для доступа к АПИ */
             JAXBContext context = JAXBContext.newInstance(Cafe.class);
+            /* Создаем сериализатор */
             Marshaller marshaller = context.createMarshaller();
+            /* Указываем, что нам нужно форматирование */
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             String xml = "";
             try (StringWriter writer = new StringWriter()) {
+                /* Сериализуем */
                 marshaller.marshal(cafe, writer);
                 xml = writer.getBuffer().toString();
                 System.out.println(xml);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            /* Для десериализации нам нужно создать десериализатор */
             Unmarshaller unmarshaller = context.createUnmarshaller();
             try (StringReader reader = new StringReader(xml)) {
+                /* Десериализуем */
                 Cafe result = (Cafe) unmarshaller.unmarshal(reader);
                 System.out.println(result);
             }
