@@ -4,7 +4,7 @@ package ru.job4j.serialization.json;
  * Класс описывает модель адреса со свойствами <b>city</b>, <b>street</b>, <b>house</b> и <b>apartment</b>
  *
  * @author ARTEM CHERNIKOV
- * @version 1.0
+ * @version 1.1
  */
 public class Address {
     /**
@@ -40,6 +40,42 @@ public class Address {
     }
 
     /**
+     * Метод используется для получения поля {@link Address#city}
+     *
+     * @return - возвращает город
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * Метод используется для получения поля {@link Address#street}
+     *
+     * @return - возвращает улицу
+     */
+    public String getStreet() {
+        return street;
+    }
+
+    /**
+     * Метод используется для получения поля {@link Address#house}
+     *
+     * @return - возвращает номер дома
+     */
+    public int getHouse() {
+        return house;
+    }
+
+    /**
+     * Метод используется для получения поля {@link Address#apartment}
+     *
+     * @return - возвращает номер квартиры
+     */
+    public int getApartment() {
+        return apartment;
+    }
+
+    /**
      * Метод переопределяется для наилучшего вывода объекта и его свойств в консоль
      *
      * @return - возвращает объект в виде строки
@@ -53,6 +89,4 @@ public class Address {
                 + ", apartment=" + apartment
                 + '}';
     }
-
-
 }

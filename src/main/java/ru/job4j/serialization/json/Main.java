@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * Класс демонстрирует создание объекта {@link Cafe},
- * сериализацию в формат JSON и десериализацию его же обратно
+ * Класс демонстрирует создание объекта {@link Cafe}, сериализацию
+ * в формат JSON и обратно в POJO с помощью {@link Gson}
  * Используется класс {@link Cafe}
  *
  * @author ARTEM CHERNIKOV
