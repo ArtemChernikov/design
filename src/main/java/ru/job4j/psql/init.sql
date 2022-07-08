@@ -1,0 +1,1 @@
+CREATE DATABASE database_of_requests;
