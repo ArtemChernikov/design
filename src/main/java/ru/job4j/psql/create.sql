@@ -1,52 +1,52 @@
-create table roles(
-    id serial primary key,
+CREATE TABLE roles(
+    id serial PRIMARY KEY,
     role_name varchar(50)
 );
 
-create table rules(
-    id serial primary key,
+CREATE TABLE rules(
+    id serial PRIMARY KEY,
     rule text
 );
 
-create table users(
-    id serial primary key,
+CREATE TABLE users(
+    id serial PRIMARY KEY,
     first_name varchar(25),
     last_name varchar(25),
-    role_id int references roles(id)
+    role_id int REFERENCES roles(id)
 );
 
-create table role_rules(
-    id serial primary key,
-    role_id int references roles(id),
-    rules_id int references rules(id)
+CREATE TABLE role_rules(
+    id serial PRIMARY KEY,
+    role_id int REFERENCES roles(id),
+    rules_id int REFERENCES rules(id)
 );
 
-create table categories(
-    id serial primary key,
+CREATE TABLE categories(
+    id serial PRIMARY KEY,
     category text
 );
 
-create table states(
-    id serial primary key,
+CREATE TABLE states(
+    id serial PRIMARY KEY,
     state varchar(50)
 );
 
-create table items(
-    id serial primary key,
+CREATE TABLE items(
+    id serial PRIMARY KEY,
     item_name varchar(255),
-    user_id int references users(id),
-    category_id int references categories(id),
-    state_id int references states(id)
+    user_id int REFERENCES users(id),
+    category_id int REFERENCES categories(id),
+    state_id int REFERENCES states(id)
 );
 
-create table comments(
-    id serial primary key,
+CREATE TABLE comments(
+    id serial PRIMARY KEY,
     comment text,
-    item_id int references items(id)
+    item_id int REFERENCES items(id)
 );
 
-create table attachs(
-    id serial primary key,
+CREATE TABLE attachs(
+    id serial PRIMARY KEY,
     attach text,
-    item_id int references items(id)
+    item_id int REFERENCES items(id)
 );
