@@ -51,8 +51,10 @@ SELECT *
 FROM product
 WHERE expired_date < current_date;
 
-SELECT DISTINCT MAX(price)
-FROM product;
+SELECT name, price
+FROM product
+WHERE price = (SELECT MAX(price)
+               FROM product);
 
 SELECT type.name, COUNT(*)
 FROM product
