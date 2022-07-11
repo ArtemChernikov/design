@@ -1,3 +1,8 @@
+CREATE TABLE deans(
+    dean_id serial PRIMARY KEY,
+    dean_name varchar(20)
+);
+
 CREATE TABLE faculties(
     faculty_id serial PRIMARY KEY,
     faculty_name text,
@@ -10,11 +15,6 @@ CREATE TABLE students(
     last_name varchar(15),
     dean_id int REFERENCES faculties(faculty_dean),
     faculty_id int REFERENCES faculties(faculty_id)
-);
-
-CREATE TABLE deans(
-    dean_id serial PRIMARY KEY,
-    dean_name varchar(20)
 );
 
 INSERT INTO deans (dean_name)
