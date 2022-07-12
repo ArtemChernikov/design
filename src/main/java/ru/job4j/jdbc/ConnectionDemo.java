@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Класс демонстрирует подключение к базе данных с помощью данных (driver, url, login, password),
+ * Класс демонстрирует подключение к БД с помощью данных (driver, url, login, password),
  * которые лежат в корне проекта в файле app.properties, извлечение данных из файла
  * производим с помощью класса {@link Config}, который изымает данные по ключу
  *
