@@ -1,5 +1,6 @@
 package ru.job4j.jdbc;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.StringJoiner;
@@ -49,9 +50,6 @@ public class TableEditor implements AutoCloseable {
      * @throws Exception - может выбросить {@link Exception}
      */
     private void initConnection() throws Exception {
-        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
-            properties.load(in);
-        }
         Class.forName(properties.getProperty("driver"));
         connection = DriverManager.getConnection(properties.getProperty("url"), properties.getProperty("login"), properties.getProperty("password"));
     }
@@ -165,18 +163,24 @@ public class TableEditor implements AutoCloseable {
     }
 
     public static void main(String[] args) {
-        try (TableEditor tableEditor = new TableEditor(new Properties())) {
-            Connection connection = tableEditor.getConnection();
-            tableEditor.createTable("cars");
-            System.out.println(getTableScheme(connection, "cars"));
-            tableEditor.addColumn("cars", "engine", "varchar(50)");
-            System.out.println(getTableScheme(connection, "cars"));
-            tableEditor.renameColumn("cars", "engine", "car_body");
-            System.out.println(getTableScheme(connection, "cars"));
-            tableEditor.dropColumn("cars", "car_body");
-            System.out.println(getTableScheme(connection, "cars"));
-            tableEditor.dropTable("cars");
-        } catch (Exception e) {
+        Properties properties = new Properties();
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+            properties.load(in);
+            try (TableEditor tableEditor = new TableEditor(properties)) {
+                Connection connection = tableEditor.getConnection();
+                tableEditor.createTable("cars");
+                System.out.println(getTableScheme(connection, "cars"));
+                tableEditor.addColumn("cars", "engine", "varchar(50)");
+                System.out.println(getTableScheme(connection, "cars"));
+                tableEditor.renameColumn("cars", "engine", "car_body");
+                System.out.println(getTableScheme(connection, "cars"));
+                tableEditor.dropColumn("cars", "car_body");
+                System.out.println(getTableScheme(connection, "cars"));
+                tableEditor.dropTable("cars");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
