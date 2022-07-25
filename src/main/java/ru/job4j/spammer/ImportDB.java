@@ -51,6 +51,9 @@ public class ImportDB {
             String line;
             while ((line = rd.readLine()) != null) {
                 String[] array = line.split(";");
+                if (array.length != 2 || array[0].isEmpty() && array[1].isEmpty()) {
+                    throw new IllegalArgumentException("Проверьте корректность данных в файле!");
+                }
                 users.add(new User(array[0], array[1]));
             }
         }
