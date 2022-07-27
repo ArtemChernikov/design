@@ -1,10 +1,10 @@
 package ru.job4j.generics;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
 
 public class RoleStoreTest {
 
@@ -21,7 +21,7 @@ public class RoleStoreTest {
         RoleStore store = new RoleStore();
         store.add(new Role("1", "Actor"));
         Role result = store.findById("10");
-        assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class RoleStoreTest {
         store.add(new Role("1", "Actor"));
         store.delete("1");
         Role result = store.findById("1");
-        assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test

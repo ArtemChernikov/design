@@ -1,24 +1,25 @@
 package ru.job4j.iterator;
 
-import org.junit.Test;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EvenNumbersIteratorTest {
 
     private Iterator<Integer> it;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         it = new EvenNumbersIterator(new int[]{1, 2, 3, 4, 5, 6, 7});
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void shouldReturnEvenNumbersSequentially() {
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(2));
@@ -27,7 +28,7 @@ public class EvenNumbersIteratorTest {
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(6));
         assertThat(it.hasNext(), is(false));
-        it.next();
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     @Test

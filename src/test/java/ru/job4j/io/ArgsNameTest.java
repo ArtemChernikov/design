@@ -1,9 +1,10 @@
 package ru.job4j.io;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ArgsNameTest {
 
@@ -25,39 +26,39 @@ public class ArgsNameTest {
         assertThat(jvm.get("request"), is("?msg=Exit="));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenGetNotExist() {
         ArgsName jvm = ArgsName.of(new String[]{"-Xmx=512"});
-        jvm.get("Xms");
+        assertThrows(IllegalArgumentException.class, () -> jvm.get("Xms"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenWrongSomeArgument() {
-        ArgsName jvm = ArgsName.of(new String[]{"-enconding=UTF-8", "-Xmx="});
+        assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[]{"-enconding=UTF-8", "-Xmx="}));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenEmptyArguments() {
-        ArgsName jvm = ArgsName.of(new String[]{});
+        assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[]{}));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenMissingFirstCharacter() {
-        ArgsName jvm = ArgsName.of(new String[]{"enconding=UTF-8", "-Xmx=512"});
+        assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[]{"enconding=UTF-8", "-Xmx=512"}));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenKeyIsMissing() {
-        ArgsName jvm = ArgsName.of(new String[]{"-=UTF-8", "-Xmx=512"});
+        assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[]{"-=UTF-8", "-Xmx=512"}));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenEqualsIsMissing() {
-        ArgsName jvm = ArgsName.of(new String[]{"-encondingUTF-8", "-Xmx=512"});
+        assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[]{"-encondingUTF-8", "-Xmx=512"}));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenKeyAndValueIsMissing() {
-        ArgsName jvm = ArgsName.of(new String[]{"-=", "-Xmx=512"});
+        assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[]{"-=", "-Xmx=512"}));
     }
 }

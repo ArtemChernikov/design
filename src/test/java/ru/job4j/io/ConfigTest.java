@@ -1,9 +1,10 @@
 package ru.job4j.io;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ConfigTest {
 
@@ -32,11 +33,10 @@ public class ConfigTest {
         assertThat(config.value("name"), is("Chernikov=hh"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenKeyWithoutValue() {
         String path = "./data/KeyWithoutValue.properties";
         Config config = new Config(path);
-        config.load();
-        assertThat(config.value("name"), is("Chernikov=hh"));
+        assertThrows(IllegalArgumentException.class, config::load);
     }
 }

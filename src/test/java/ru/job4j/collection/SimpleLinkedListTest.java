@@ -1,13 +1,14 @@
 package ru.job4j.collection;
 
 import org.hamcrest.core.Is;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SimpleLinkedListTest {
 
@@ -20,12 +21,12 @@ public class SimpleLinkedListTest {
         assertThat(list.get(1), Is.is(2));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void whenGetFromOutOfBoundThenExceptionThrown() {
         LinkedList<Integer> list = new SimpleLinkedList<>();
         list.add(1);
         list.add(2);
-        list.get(2);
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(2));
     }
 
     @Test
@@ -89,17 +90,17 @@ public class SimpleLinkedListTest {
         assertThat(second.hasNext(), Is.is(false));
     }
 
-    @Test(expected = ConcurrentModificationException.class)
+    @Test
     public void whenAddAfterGetIteratorThenMustBeException() {
         LinkedList<Integer> list = new SimpleLinkedList<>();
         Iterator<Integer> iterator = list.iterator();
         list.add(4);
-        iterator.next();
+        assertThrows(ConcurrentModificationException.class, iterator::next);
     }
 
     @Test
     public void whenGetIteratorFromEmptyListThenHasNextReturnFalse() {
         LinkedList<Integer> list = new SimpleLinkedList<>();
-        Assert.assertFalse(list.iterator().hasNext());
+        Assertions.assertFalse(list.iterator().hasNext());
     }
 }

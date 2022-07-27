@@ -1,6 +1,6 @@
 package ru.job4j.question;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 

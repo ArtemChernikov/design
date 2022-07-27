@@ -1,28 +1,30 @@
 package ru.job4j.collection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ForwardLinkedTest {
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void whenDeleteFirst() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.add(1);
         linked.deleteFirst();
-        linked.iterator().next();
+        assertThrows(NoSuchElementException.class, () -> linked.iterator().next());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void whenDeleteEmptyLinked() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
-        linked.deleteFirst();
+        assertThrows(NoSuchElementException.class, linked::deleteFirst);
     }
 
     @Test
@@ -72,13 +74,13 @@ public class ForwardLinkedTest {
     @Test
     public void whenSize0ThenReturnFalse() {
         ForwardLinked<Integer> emptyList = new ForwardLinked<>();
-        assertFalse(emptyList.revert());
+        Assertions.assertFalse(emptyList.revert());
     }
 
     @Test
     public void whenSize1ThenReturnFalse() {
         ForwardLinked<Integer> singleList = new ForwardLinked<>();
         singleList.add(1);
-        assertFalse(singleList.revert());
+        Assertions.assertFalse(singleList.revert());
     }
 }

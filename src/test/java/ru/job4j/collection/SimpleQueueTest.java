@@ -1,11 +1,12 @@
 package ru.job4j.collection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SimpleQueueTest {
 
@@ -36,10 +37,10 @@ public class SimpleQueueTest {
         assertThat(rsl, is(2));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void whenEmptyPoll() {
         SimpleQueue<Integer> queue = new SimpleQueue<>();
-        queue.poll();
+        assertThrows(NoSuchElementException.class, queue::poll);
     }
 
     @Test

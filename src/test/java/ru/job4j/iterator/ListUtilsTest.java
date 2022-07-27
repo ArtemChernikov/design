@@ -1,6 +1,6 @@
 package ru.job4j.iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ListUtilsTest {
 
@@ -18,10 +19,10 @@ public class ListUtilsTest {
         assertThat(input, is(Arrays.asList(1, 2, 3)));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void whenAddBeforeWithInvalidIndex() {
         List<Integer> input = new ArrayList<>(Arrays.asList(1, 3));
-        ListUtils.addBefore(input, 3, 2);
+        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.addBefore(input, 3, 2));
     }
 
     @Test
@@ -31,11 +32,10 @@ public class ListUtilsTest {
         assertThat(input, is(Arrays.asList(0, 1, 2, 3)));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void whenAddAfterLastWithInvalidIndex() {
         List<Integer> input = new ArrayList<>(Arrays.asList(0, 1, 2));
-        ListUtils.addAfter(input, 10, 3);
-        assertThat(input, is(Arrays.asList(0, 1, 2, 3)));
+        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.addAfter(input, 10, 3));
     }
 
     @Test

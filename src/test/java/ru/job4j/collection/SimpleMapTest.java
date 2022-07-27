@@ -1,30 +1,28 @@
 package ru.job4j.collection;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SimpleMapTest {
     SimpleMap<Integer, String> map = new SimpleMap<>();
 
     @Test
     public void whenPutOneElement() {
-        assertTrue(map.put(1, "Artem"));
+        Assertions.assertTrue(map.put(1, "Artem"));
     }
 
     @Test
     public void whenPutElementAndIndexAlreadyTaken() {
         map.put(1, "Artem");
-        assertFalse(map.put(1, "Artem"));
+        Assertions.assertFalse(map.put(1, "Artem"));
     }
 
     @Test
@@ -35,13 +33,13 @@ public class SimpleMapTest {
         map.put(42, "Evgeniy");
         map.put(11, "Jordan");
         map.put(25, "Maxim");
-        assertTrue(map.put(22, "Maxim"));
+        Assertions.assertTrue(map.put(22, "Maxim"));
     }
 
     @Test
     public void whenPutDuplicateElement() {
         map.put(2, "Artem");
-        assertFalse(map.put(2, "Artem"));
+        Assertions.assertFalse(map.put(2, "Artem"));
     }
 
     @Test
@@ -56,7 +54,7 @@ public class SimpleMapTest {
     public void whenNotExistElementGet() {
         map.put(2, "Artem");
         map.put(44, "Michail");
-        assertNull(map.get(22));
+        Assertions.assertNull(map.get(22));
     }
 
     @Test
@@ -64,37 +62,37 @@ public class SimpleMapTest {
         map.put(2, "Artem");
         map.put(44, "Michail");
         map.remove(2);
-        assertNull(map.get(2));
+        Assertions.assertNull(map.get(2));
     }
 
     @Test
     public void whenRemoveElement() {
         map.put(2, "Artem");
         map.put(44, "Michail");
-        assertTrue(map.remove(2));
+        Assertions.assertTrue(map.remove(2));
     }
 
     @Test
     public void whenRemoveNotExistElement() {
         map.put(2, "Artem");
         map.put(44, "Michail");
-        assertFalse(map.remove(3));
+        Assertions.assertFalse(map.remove(3));
     }
 
     @Test
     public void whenGetIteratorFromEmptyMapThenHasNextReturnFalse() {
-        Assert.assertFalse(map.iterator().hasNext());
+        Assertions.assertFalse(map.iterator().hasNext());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void whenGetIteratorFromEmptyMapThenNextThrowException() {
-        map.iterator().next();
+        assertThrows(NoSuchElementException.class, () -> map.iterator().next());
     }
 
-    @Test(expected = ConcurrentModificationException.class)
+    @Test
     public void whenAddAfterGetIteratorThenMustBeException() {
         Iterator<Integer> iterator = map.iterator();
         map.put(44, "Michail");
-        iterator.next();
+        assertThrows(ConcurrentModificationException.class, iterator::next);
     }
 }

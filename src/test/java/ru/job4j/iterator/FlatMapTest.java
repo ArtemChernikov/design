@@ -1,11 +1,12 @@
 package ru.job4j.iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
 import java.util.List;
@@ -56,13 +57,13 @@ public class FlatMapTest {
         assertThat(flat.hasNext(), is(false));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void whenEmpty() {
         Iterator<Iterator<Object>> data = List.of(
                 List.of().iterator()
         ).iterator();
         FlatMap<Object> flat = new FlatMap<>(data);
-        flat.next();
+        assertThrows(NoSuchElementException.class, flat::next);
     }
 
     @Test
@@ -87,6 +88,6 @@ public class FlatMapTest {
                 List.of().iterator()
         ).iterator();
         FlatMap flat = new FlatMap(it);
-        assertFalse(flat.hasNext());
+        Assertions.assertFalse(flat.hasNext());
     }
 }

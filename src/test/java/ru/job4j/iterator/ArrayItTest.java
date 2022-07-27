@@ -1,11 +1,12 @@
 package ru.job4j.iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ArrayItTest {
 
@@ -28,11 +29,11 @@ public class ArrayItTest {
         assertThat(it.next(), is(3));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void whenNextFromEmpty() {
         ArrayIt it = new ArrayIt(
                 new int[]{}
         );
-        it.next();
+        assertThrows(NoSuchElementException.class, it::next);
     }
 }

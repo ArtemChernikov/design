@@ -1,10 +1,10 @@
 package ru.job4j.generics;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
 
 public class UserStoreTest {
 
@@ -21,7 +21,7 @@ public class UserStoreTest {
         UserStore store = new UserStore();
         store.add(new User("1", "Petr"));
         User result = store.findById("10");
-        assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class UserStoreTest {
         store.add(new User("1", "Petr"));
         store.delete("1");
         User result = store.findById("1");
-        assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test

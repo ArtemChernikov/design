@@ -1,17 +1,18 @@
 package ru.job4j.io;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class CSVReaderTest {
 
-    @Rule
-    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+    @TempDir
+    Path directory = Paths.get("./TempDir");
 
     @Test
     public void whenFilterTwoColumns() throws Exception {
@@ -22,8 +23,8 @@ public class CSVReaderTest {
                 "Jack;25;Johnson;Undergraduate",
                 "William;30;Brown;Secondary special"
         );
-        File file = temporaryFolder.newFile("source.csv");
-        File target = temporaryFolder.newFile("target.csv");
+        File file = new File(directory + "source.csv");
+        File target = new File(directory + "target.csv");
         ArgsName argsName = ArgsName.of(new String[]{
                 "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter=name,age"
         });
@@ -36,6 +37,6 @@ public class CSVReaderTest {
                 "William;30"
         ).concat(System.lineSeparator());
         CSVReader.handle(argsName);
-        Assert.assertEquals(expected, Files.readString(target.toPath()));
+        Assertions.assertEquals(expected, Files.readString(target.toPath()));
     }
 }
