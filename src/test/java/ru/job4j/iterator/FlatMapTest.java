@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -75,7 +74,7 @@ public class FlatMapTest {
                 List.of(1).iterator()
         ).iterator();
         FlatMap flat = new FlatMap(it);
-        assertTrue(flat.hasNext());
+        Assertions.assertTrue(flat.hasNext());
         assertThat(1, is(flat.next()));
     }
 
