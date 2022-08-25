@@ -1,4 +1,4 @@
-package ru.job4j.srp.violationsrp;
+package ru.job4j.design.violationsrp;
 
 import java.io.File;
 
