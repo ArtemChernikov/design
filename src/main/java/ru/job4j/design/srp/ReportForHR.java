@@ -1,12 +1,18 @@
 package ru.job4j.design.srp;
 
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * Класс описывает модель создания отчетов для HR отдела
+ * (без дат найма и увольнения, но с зарплатой по убыванию)
+ *
+ * @author ARTEM CHERNIKOV
+ * @version 1.0
+ */
 public class ReportForHR implements Report {
-    private Store store;
+    private final Store store;
 
     public ReportForHR(Store store) {
         this.store = store;

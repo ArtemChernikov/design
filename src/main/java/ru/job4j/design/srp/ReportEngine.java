@@ -3,10 +3,16 @@ package ru.job4j.design.srp;
 import java.text.SimpleDateFormat;
 import java.util.function.Predicate;
 
+/**
+ * Класс описывает модель создания отчетов
+ *
+ * @author ARTEM CHERNIKOV
+ * @version 1.0
+ */
 public class ReportEngine implements Report {
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
 
-    private Store store;
+    private final Store store;
 
     public ReportEngine(Store store) {
         this.store = store;

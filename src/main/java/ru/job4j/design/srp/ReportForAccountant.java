@@ -3,6 +3,13 @@ package ru.job4j.design.srp;
 import java.text.SimpleDateFormat;
 import java.util.function.Predicate;
 
+/**
+ * Класс описывает модель создания отчетов для отдела бухгалтерии
+ * (с измененным видом зарплаты - рубли переведены в доллары)
+ *
+ * @author ARTEM CHERNIKOV
+ * @version 1.0
+ */
 public class ReportForAccountant implements Report {
     public static final int DOLLAR_RUBLE = 60;
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");

@@ -3,10 +3,29 @@ package ru.job4j.design.srp;
 import java.util.Calendar;
 import java.util.Objects;
 
+/**
+ * Класс описывает модель сотрудника компании со свойствами <b>name</b>, <b>hired</b>,
+ * <b>fired</b> и <b>salary</b>
+ *
+ * @author ARTEM CHERNIKOV
+ * @version 1.0
+ */
 public class Employee implements Comparable<Employee> {
+    /**
+     * Поле имя сотрудника
+     */
     private String name;
+    /**
+     * Поле дата найма сотрудника
+     */
     private Calendar hired;
+    /**
+     * Поле дата увольнения сотрудника
+     */
     private Calendar fired;
+    /**
+     * Поле зарплата сотрудника
+     */
     private double salary;
 
     public Employee(String name, Calendar hired, Calendar fired, double salary) {
