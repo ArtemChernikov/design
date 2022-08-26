@@ -4,9 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.function.Predicate;
 
 public class ReportForAccountant implements Report {
+    public static final int DOLLAR_RUBLE = 60;
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
 
-    private Store store;
+    private final Store store;
 
     public ReportForAccountant(Store store) {
         this.store = store;
@@ -21,7 +22,7 @@ public class ReportForAccountant implements Report {
             text.append(employee.getName()).append(";")
                     .append(DATE_FORMAT.format(employee.getHired().getTime())).append(";")
                     .append(DATE_FORMAT.format(employee.getFired().getTime())).append(";")
-                    .append(employee.getSalary() / 60).append(";")
+                    .append(employee.getSalary() / DOLLAR_RUBLE).append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();

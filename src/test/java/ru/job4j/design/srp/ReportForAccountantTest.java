@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static ru.job4j.design.srp.ReportEngine.DATE_FORMAT;
+import static ru.job4j.design.srp.ReportForAccountant.DATE_FORMAT;
+import static ru.job4j.design.srp.ReportForAccountant.DOLLAR_RUBLE;
 
 class ReportForAccountantTest {
 
@@ -23,7 +23,7 @@ class ReportForAccountantTest {
                 .append(worker.getName()).append(";")
                 .append(DATE_FORMAT.format(worker.getHired().getTime())).append(";")
                 .append(DATE_FORMAT.format(worker.getFired().getTime())).append(";")
-                .append(worker.getSalary() / 60).append(";")
+                .append(worker.getSalary() / DOLLAR_RUBLE).append(";")
                 .append(System.lineSeparator());
         assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
