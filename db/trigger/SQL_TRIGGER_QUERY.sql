@@ -31,7 +31,7 @@ RETURNS TRIGGER AS
 $$
 BEGIN
 UPDATE products
-SET price = price - price * 0.05;
+SET NEW.price = price - price * 0.05;
 RETURN NEW;
 END;
 $$
