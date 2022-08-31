@@ -9,7 +9,8 @@ RETURNS TRIGGER AS
 $$
 BEGIN
 UPDATE products
-SET price = price + price * 0.05;
+SET price = price + price * 0.05
+WHERE id = (SELECT id FROM inserted);
 RETURN NEW;
 END;
  $$
@@ -30,8 +31,7 @@ OR replace FUNCTION minus_tax()
 RETURNS TRIGGER AS
 $$
 BEGIN
-UPDATE products
-SET NEW.price = price - price * 0.05;
+NEW.price = NEW.price - NEW.price * 0.05;
 RETURN NEW;
 END;
 $$
