@@ -7,9 +7,7 @@ BEGIN;
 DECLARE cursor_products SCROLL CURSOR
 FOR SELECT * FROM products;
 
-MOVE LAST FROM cursor_products;
-MOVE BACKWARD 1 FROM cursor_products;
-FETCH FORWARD FROM cursor_products;
+FETCH LAST FROM cursor_products;
 
 MOVE BACKWARD 2 FROM cursor_products;
 FETCH FROM cursor_products;
