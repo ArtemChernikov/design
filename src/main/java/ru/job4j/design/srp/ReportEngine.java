@@ -32,6 +32,4 @@ public class ReportEngine implements Report {
         }
         return text.toString();
     }
-
-
 }
