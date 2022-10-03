@@ -16,15 +16,21 @@ class ReportXMLTest {
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
         Report reportXML = new ReportXML(store);
-        String expect = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + "\n"
-                + "<employee>\n"
-                + "    <employees>\n"
-                + "        <fired>" + dateFormat.format(worker.getHired().getTime()) + "</fired>\n"
-                + "        <hired>" + dateFormat.format(worker.getHired().getTime()) + "</hired>\n"
-                + "        <name>Ivan</name>\n"
-                + "        <salary>100.0</salary>\n"
-                + "    </employees>\n"
-                + "</employee>\n";
+        String expect = """
+                <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                <employee>
+                    <employees>
+                        <fired>""" + dateFormat.format(worker.getHired().getTime())
+                + """
+                </fired>
+                        <hired>""" + dateFormat.format(worker.getHired().getTime())
+                + """
+                </hired>
+                        <name>Ivan</name>
+                        <salary>100.0</salary>
+                    </employees>
+                </employee>
+                """;
         assertThat(reportXML.generate(em -> true)).isEqualTo(expect);
     }
 
