@@ -19,21 +19,32 @@ class ReportJSONTest {
         LocalDateTime fired = LocalDateTime.ofInstant(worker.getFired().toInstant(), worker.getFired()
                 .getTimeZone().toZoneId());
         Report reportJSON = new ReportJSON(store);
-        String expect = "[{\"name\":\"Ivan\",\"hired\":"
-                + "{\"year\":" + hired.getYear()
-                + ",\"month\":" + (hired.getMonth().getValue() - 1)
-                + ",\"dayOfMonth\":" + hired.getDayOfMonth()
-                + ",\"hourOfDay\":" + hired.getHour()
-                + ",\"minute\":" + hired.getMinute()
-                + ",\"second\":" + hired.getSecond()
-                + "},\"fired\""
-                + ":{\"year\":" + fired.getYear()
-                + ",\"month\":" + (fired.getMonth().getValue() - 1)
-                + ",\"dayOfMonth\":" + fired.getDayOfMonth()
-                + ",\"hourOfDay\":" + fired.getHour()
-                + ",\"minute\":" + fired.getMinute()
-                + ",\"second\":" + fired.getSecond()
-                + "},\"salary\":100.0}]";
-        assertThat(reportJSON.generate(em -> true)).isEqualTo(expect);
+        StringBuilder expect = new StringBuilder()
+                .append("[{\"name\":\"Ivan\",\"hired\":{\"year\":")
+                .append(hired.getYear())
+                .append(",\"month\":")
+                .append(hired.getMonth().getValue() - 1)
+                .append(",\"dayOfMonth\":")
+                .append(hired.getDayOfMonth())
+                .append(",\"hourOfDay\":")
+                .append(hired.getHour())
+                .append(",\"minute\":")
+                .append(hired.getMinute())
+                .append(",\"second\":")
+                .append(hired.getSecond())
+                .append("},\"fired\":{\"year\":")
+                .append(fired.getYear())
+                .append(",\"month\":")
+                .append(fired.getMonth().getValue() - 1)
+                .append(",\"dayOfMonth\":")
+                .append(fired.getDayOfMonth())
+                .append(",\"hourOfDay\":")
+                .append(fired.getHour())
+                .append(",\"minute\":")
+                .append(fired.getMinute())
+                .append(",\"second\":")
+                .append(fired.getSecond())
+                .append("},\"salary\":100.0}]");
+        assertThat(reportJSON.generate(em -> true)).isEqualTo(expect.toString());
     }
 }
