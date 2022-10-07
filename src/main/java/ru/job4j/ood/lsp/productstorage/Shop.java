@@ -12,8 +12,9 @@ public class Shop implements Store {
         if (percent >= 25 && percent <= 75) {
             storage.add(food);
         } else if (percent > 75 && percent != 100) {
-            int price = food.getPrice();
-            food.setPrice(price - (price / 100 * food.getDiscount()));
+            double price = food.getPrice();
+            double newPrice = price - (price / 100 * food.getDiscount());
+            food.setPrice(newPrice);
             storage.add(food);
         }
     }

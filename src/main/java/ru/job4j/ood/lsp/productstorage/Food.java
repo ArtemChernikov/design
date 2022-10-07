@@ -9,11 +9,11 @@ public class Food {
     private final String name;
     private final LocalDate expiryDate;
     private final LocalDate createDate;
-    private int price;
+    private double price;
     private final int discount;
     private final int corruptionPercent;
 
-    public Food(String name, LocalDate expiryDate, LocalDate createDate, int price, int discount) {
+    public Food(String name, LocalDate expiryDate, LocalDate createDate, double price, int discount) {
         validate(expiryDate, createDate, price, discount);
         this.name = name;
         this.expiryDate = expiryDate;
@@ -23,7 +23,7 @@ public class Food {
         this.corruptionPercent = calculate(expiryDate, createDate);
     }
 
-    private void validate(LocalDate expiryDate, LocalDate createDate, int price, int discount) {
+    private void validate(LocalDate expiryDate, LocalDate createDate, double price, int discount) {
         if (expiryDate.isBefore(createDate) || expiryDate.equals(createDate)) {
             throw new IllegalArgumentException("Укажите корректную дату окончания срока годности продукта!");
         }
@@ -51,11 +51,11 @@ public class Food {
         return corruptionPercent;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         if (price > 0) {
             this.price = price;
         }
