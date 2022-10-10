@@ -1,17 +1,14 @@
 package ru.job4j.ood.lsp.productstorage;
 
-import static ru.job4j.ood.lsp.productstorage.Percent.calculate;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Food {
+public abstract class Food {
     private final String name;
     private final LocalDate expiryDate;
     private final LocalDate createDate;
     private double price;
     private final int discount;
-    private final int corruptionPercent;
 
     public Food(String name, LocalDate expiryDate, LocalDate createDate, double price, int discount) {
         validate(expiryDate, createDate, price, discount);
@@ -20,7 +17,6 @@ public class Food {
         this.createDate = createDate;
         this.price = price;
         this.discount = discount;
-        this.corruptionPercent = calculate(expiryDate, createDate);
     }
 
     private void validate(LocalDate expiryDate, LocalDate createDate, double price, int discount) {
@@ -45,10 +41,6 @@ public class Food {
 
     public LocalDate getCreateDate() {
         return createDate;
-    }
-
-    public int getCorruptionPercent() {
-        return corruptionPercent;
     }
 
     public double getPrice() {

@@ -1,20 +1,25 @@
 package ru.job4j.ood.lsp.productstorage;
 
+import static ru.job4j.ood.lsp.productstorage.Percent.calculate;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Warehouse implements Store {
-    List<Food> storage = new ArrayList<>();
+    private final List<Food> storage = new ArrayList<>();
 
     @Override
-    public void add(Food food) {
-        if (food.getCorruptionPercent() < 25) {
+    public boolean add(Food food) {
+        boolean rsl = false;
+        if (calculate(food) < LOW_EXPIRATION_DATE) {
             storage.add(food);
+            rsl = true;
         }
+        return rsl;
     }
 
     @Override
     public List<Food> getStorage() {
-        return storage;
+        return new ArrayList<>(storage);
     }
 }

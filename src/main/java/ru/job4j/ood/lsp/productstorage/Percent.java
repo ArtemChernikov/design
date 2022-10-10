@@ -19,14 +19,15 @@ public class Percent {
      * конца срока годности от даты производства в процентах
      * 5) Отнимаем полученный результат от 100 и получаем израсходованный срок годности в процентах
      *
-     * @param expireDate - дата конца срока годности продукта {@link Food}
-     * @param createDate - дата производства продукта {@link Food}
+     * @param food - {@link Food}
      * @return - возвращает процент израсходованности
      */
-    public static int calculate(LocalDate expireDate, LocalDate createDate) {
+    public static int calculate(Food food) {
+        LocalDate expiryDate = food.getExpiryDate();
+        LocalDate createDate = food.getCreateDate();
         LocalDate now = LocalDate.now();
-        int percent = 100 - Math.round(now.until(expireDate, ChronoUnit.DAYS) * 100
-                / (float) createDate.until(expireDate, ChronoUnit.DAYS));
+        int percent = 100 - Math.round(now.until(expiryDate, ChronoUnit.DAYS) * 100
+                / (float) createDate.until(expiryDate, ChronoUnit.DAYS));
         return Math.min(percent, 100);
     }
 }

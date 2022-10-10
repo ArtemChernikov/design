@@ -4,7 +4,11 @@ import java.util.List;
 
 public interface Store {
 
-    void add(Food food);
+    int LOW_EXPIRATION_DATE = 25;
+    int MID_EXPIRATION_DATE = 75;
+    int HIGH_EXPIRATION_DATE = 100;
+
+    boolean add(Food food);
 
     List<Food> getStorage();
 }

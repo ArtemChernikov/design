@@ -15,8 +15,9 @@ class ControlQualityTest {
         Store warehouse = new Warehouse();
         Store trash = new Trash();
         ControlQuality controlQuality = new ControlQuality(List.of(shop, warehouse, trash));
-        Food meat = new Meat("pork", LocalDate.of(2022, 10, 6),
-                LocalDate.of(2022, 10, 1), 55, 10);
+        LocalDate now = LocalDate.now();
+        Food meat = new Meat("pork", now.minusDays(4),
+                now.minusDays(9), 55, 10);
         controlQuality.distribution(meat);
         assertThat(trash.getStorage().get(0)).isEqualTo(meat);
     }
@@ -27,8 +28,9 @@ class ControlQualityTest {
         Store warehouse = new Warehouse();
         Store trash = new Trash();
         ControlQuality controlQuality = new ControlQuality(List.of(shop, warehouse, trash));
-        Food apple = new Fruit("apple", LocalDate.of(2022, 10, 15),
-                LocalDate.of(2022, 10, 1), 55, 10);
+        LocalDate now = LocalDate.now();
+        Food apple = new Fruit("apple", now.plusDays(5),
+                now.minusDays(9), 55, 10);
         controlQuality.distribution(apple);
         assertThat(shop.getStorage().get(0)).isEqualTo(apple);
     }
@@ -39,8 +41,9 @@ class ControlQualityTest {
         Store warehouse = new Warehouse();
         Store trash = new Trash();
         ControlQuality controlQuality = new ControlQuality(List.of(shop, warehouse, trash));
-        Food apple = new Fruit("apple", LocalDate.of(2022, 10, 8),
-                LocalDate.of(2022, 9, 1), 50, 10);
+        LocalDate now = LocalDate.now();
+        Food apple = new Fruit("apple", now.plusDays(2),
+                now.minusDays(30), 50, 10);
         controlQuality.distribution(apple);
         double expectPrice = 45;
         assertThat(shop.getStorage().get(0).getPrice()).isEqualTo(expectPrice);
@@ -52,10 +55,37 @@ class ControlQualityTest {
         Store warehouse = new Warehouse();
         Store trash = new Trash();
         ControlQuality controlQuality = new ControlQuality(List.of(shop, warehouse, trash));
-        Food pork = new Meat("pork", LocalDate.of(2022, 10, 29),
-                LocalDate.of(2022, 10, 1), 50, 10);
+        LocalDate now = LocalDate.now();
+        Food pork = new Meat("pork", now.plusDays(45),
+                now.minusDays(9), 50, 10);
         controlQuality.distribution(pork);
         assertThat(warehouse.getStorage().get(0)).isEqualTo(pork);
+    }
+
+    @Test
+    void whenDifferentProductsIntoDifferentStores() {
+        Store shop = new Shop();
+        Store warehouse = new Warehouse();
+        Store trash = new Trash();
+        ControlQuality controlQuality = new ControlQuality(List.of(shop, warehouse, trash));
+        LocalDate now = LocalDate.now();
+        double expectPrice = 45;
+        Food pork = new Meat("pork", now.plusDays(45),
+                now.minusDays(9), 50, 10);
+        Food apple = new Fruit("apple", now.plusDays(2),
+                now.minusDays(30), 50, 10);
+        Food pineapple = new Fruit("pineapple", now.plusDays(5),
+                now.minusDays(9), 55, 10);
+        Food chicken = new Meat("chicken", now.minusDays(4),
+                now.minusDays(9), 55, 10);
+        controlQuality.distribution(pork);
+        controlQuality.distribution(apple);
+        controlQuality.distribution(pineapple);
+        controlQuality.distribution(chicken);
+        assertThat(warehouse.getStorage().get(0)).isEqualTo(pork);
+        assertThat(shop.getStorage().get(0).getPrice()).isEqualTo(expectPrice);
+        assertThat(shop.getStorage().get(1)).isEqualTo(pineapple);
+        assertThat(trash.getStorage().get(0)).isEqualTo(chicken);
     }
 
     @Test
