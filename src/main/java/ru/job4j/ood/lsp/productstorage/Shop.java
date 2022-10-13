@@ -12,12 +12,11 @@ public class Shop implements Store {
     public boolean add(Food food) {
         boolean rsl = false;
         int percent = calculate(food);
-        if (percent >= LOW_EXPIRATION_DATE && percent <= MID_EXPIRATION_DATE) {
-            storage.add(food);
-            rsl = true;
-        } else if (percent > MID_EXPIRATION_DATE && percent != HIGH_EXPIRATION_DATE) {
-            double price = food.getPrice();
-            food.setPrice(price - (price / 100 * food.getDiscount()));
+        if (percent >= LOW_EXPIRATION_DATE && percent < HIGH_EXPIRATION_DATE) {
+            if (percent > MID_EXPIRATION_DATE) {
+                double price = food.getPrice();
+                food.setPrice(price - (price / 100 * food.getDiscount()));
+            }
             storage.add(food);
             rsl = true;
         }

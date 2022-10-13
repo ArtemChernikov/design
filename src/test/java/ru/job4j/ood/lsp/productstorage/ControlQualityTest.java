@@ -19,7 +19,7 @@ class ControlQualityTest {
         Food meat = new Meat("pork", now.minusDays(4),
                 now.minusDays(9), 55, 10);
         controlQuality.distribution(meat);
-        assertThat(trash.getStorage().get(0)).isEqualTo(meat);
+        assertThat(trash.getStorage()).contains(meat);
     }
 
     @Test
@@ -32,7 +32,7 @@ class ControlQualityTest {
         Food apple = new Fruit("apple", now.plusDays(5),
                 now.minusDays(9), 55, 10);
         controlQuality.distribution(apple);
-        assertThat(shop.getStorage().get(0)).isEqualTo(apple);
+        assertThat(shop.getStorage()).contains(apple);
     }
 
     @Test
@@ -59,7 +59,7 @@ class ControlQualityTest {
         Food pork = new Meat("pork", now.plusDays(45),
                 now.minusDays(9), 50, 10);
         controlQuality.distribution(pork);
-        assertThat(warehouse.getStorage().get(0)).isEqualTo(pork);
+        assertThat(warehouse.getStorage()).contains(pork);
     }
 
     @Test
@@ -84,8 +84,8 @@ class ControlQualityTest {
         controlQuality.distribution(chicken);
         assertThat(warehouse.getStorage().get(0)).isEqualTo(pork);
         assertThat(shop.getStorage().get(0).getPrice()).isEqualTo(expectPrice);
-        assertThat(shop.getStorage().get(1)).isEqualTo(pineapple);
-        assertThat(trash.getStorage().get(0)).isEqualTo(chicken);
+        assertThat(shop.getStorage()).contains(pineapple);
+        assertThat(trash.getStorage()).contains(chicken);
     }
 
     @Test
