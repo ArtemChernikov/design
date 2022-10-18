@@ -3,11 +3,16 @@ package ru.job4j.ood.lsp.parking;
 import java.util.Objects;
 
 public abstract class Car {
+
+    private final String brand;
     private final String model;
     private String color;
     private String number;
 
-    public Car(String model, String color, String number) {
+    private int size;
+
+    public Car(String brand, String model, String color, String number) {
+        this.brand = brand;
         this.model = model;
         this.color = color;
         this.number = number;
@@ -34,6 +39,9 @@ public abstract class Car {
         this.number = number;
     }
 
+    public String getBrand() {
+        return brand;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -44,19 +52,22 @@ public abstract class Car {
             return false;
         }
         Car car = (Car) o;
-        return Objects.equals(model, car.model) && Objects.equals(color, car.color);
+        return size == car.size && Objects.equals(brand, car.brand) && Objects.equals(model, car.model) && Objects.equals(color, car.color) && Objects.equals(number, car.number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(model, color);
+        return Objects.hash(brand, model, color, number, size);
     }
 
     @Override
     public String toString() {
         return "Car{"
-                + "model='" + model + '\''
+                + "brand='" + brand + '\''
+                + ", model='" + model + '\''
                 + ", color='" + color + '\''
+                + ", number='" + number + '\''
+                + ", size=" + size
                 + '}';
     }
 }

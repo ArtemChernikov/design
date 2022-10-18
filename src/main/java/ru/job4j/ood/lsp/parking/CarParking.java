@@ -71,4 +71,12 @@ public class CarParking implements Parking {
     public void setOccupiedTruckParkingSpaces(int occupiedTruckParkingSpaces) {
         this.occupiedTruckParkingSpaces = occupiedTruckParkingSpaces;
     }
+
+    public Set<Car> getCarParking() {
+        return new HashSet<>(carParking);
+    }
+
+    public Set<Car> getTruckParking() {
+        return new HashSet<>(truckParking);
+    }
 }

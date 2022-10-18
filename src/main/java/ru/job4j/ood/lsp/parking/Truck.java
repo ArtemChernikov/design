@@ -1,9 +1,18 @@
 package ru.job4j.ood.lsp.parking;
 
 public class Truck extends Car {
-    final static private int SIZE = 3;
+    private final int size;
 
-    public Truck(String model, String color, String number) {
-        super(model, color, number);
+    public Truck(String brand, String model, String color, String number, int size) {
+        super(brand, model, color, number);
+        if (size > 1) {
+            this.size = size;
+        } else {
+            throw new IllegalArgumentException("Размер грузового автомобиля должен быть больше 1!");
+        }
+    }
+
+    public int getSize() {
+        return size;
     }
 }
