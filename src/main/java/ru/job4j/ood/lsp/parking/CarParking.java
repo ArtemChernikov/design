@@ -4,11 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CarParking implements Parking {
-    private final int carParkingSpaces;
-    private final int truckParkingSpaces;
     private final Set<Car> carParking = new HashSet<>();
     private final Set<Car> truckParking = new HashSet<>();
-
+    private final int carParkingSpaces;
+    private final int truckParkingSpaces;
     private int freeCarParkingSpaces;
     private int freeTruckParkingSpaces;
     private int occupiedCarParkingSpaces = 0;
