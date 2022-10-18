@@ -1,7 +1,9 @@
 package ru.job4j.ood.lsp.parking;
 
 public class Truck extends Car {
-    public Truck(String model, String color, int size) {
-        super(model, color, size);
+    final static private int SIZE = 3;
+
+    public Truck(String model, String color, String number) {
+        super(model, color, number);
     }
 }

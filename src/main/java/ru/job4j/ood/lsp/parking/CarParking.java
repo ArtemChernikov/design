@@ -1,14 +1,25 @@
 package ru.job4j.ood.lsp.parking;
 
-public abstract class CarParking implements Parking {
-    private final int parkingSpaces;
-    private int freeParkingSpaces;
-    private int occupiedParkingSpaces = 0;
+import java.util.HashSet;
+import java.util.Set;
+
+public class CarParking implements Parking {
+    private final int carParkingSpaces;
+    private final int truckParkingSpaces;
+    private final Set<Car> carParking = new HashSet<>();
+    private final Set<Car> truckParking = new HashSet<>();
+
+    private int freeCarParkingSpaces;
+    private int freeTruckParkingSpaces;
+    private int occupiedCarParkingSpaces = 0;
+    private int occupiedTruckParkingSpaces = 0;
 
 
-    public CarParking(int parkingSpaces) {
-        this.parkingSpaces = parkingSpaces;
-        freeParkingSpaces = parkingSpaces;
+    public CarParking(int carParkingSpaces, int truckParkingSpaces) {
+        this.carParkingSpaces = carParkingSpaces;
+        this.truckParkingSpaces = truckParkingSpaces;
+        freeCarParkingSpaces = carParkingSpaces;
+        freeTruckParkingSpaces = truckParkingSpaces;
     }
 
     @Override
@@ -21,23 +32,44 @@ public abstract class CarParking implements Parking {
         return false;
     }
 
-    public int getParkingSpaces() {
-        return parkingSpaces;
+
+    public int getCarParkingSpaces() {
+        return carParkingSpaces;
     }
 
-    public int getFreeParkingSpaces() {
-        return freeParkingSpaces;
+    public int getTruckParkingSpaces() {
+        return truckParkingSpaces;
     }
 
-    public void setFreeParkingSpaces(int freeParkingSpaces) {
-        this.freeParkingSpaces = freeParkingSpaces;
+    public int getFreeCarParkingSpaces() {
+        return freeCarParkingSpaces;
     }
 
-    public int getOccupiedParkingSpaces() {
-        return occupiedParkingSpaces;
+    public void setFreeCarParkingSpaces(int freeCarParkingSpaces) {
+        this.freeCarParkingSpaces = freeCarParkingSpaces;
     }
 
-    public void setOccupiedParkingSpaces(int occupiedParkingSpaces) {
-        this.occupiedParkingSpaces = occupiedParkingSpaces;
+    public int getFreeTruckParkingSpaces() {
+        return freeTruckParkingSpaces;
+    }
+
+    public void setFreeTruckParkingSpaces(int freeTruckParkingSpaces) {
+        this.freeTruckParkingSpaces = freeTruckParkingSpaces;
+    }
+
+    public int getOccupiedCarParkingSpaces() {
+        return occupiedCarParkingSpaces;
+    }
+
+    public void setOccupiedCarParkingSpaces(int occupiedCarParkingSpaces) {
+        this.occupiedCarParkingSpaces = occupiedCarParkingSpaces;
+    }
+
+    public int getOccupiedTruckParkingSpaces() {
+        return occupiedTruckParkingSpaces;
+    }
+
+    public void setOccupiedTruckParkingSpaces(int occupiedTruckParkingSpaces) {
+        this.occupiedTruckParkingSpaces = occupiedTruckParkingSpaces;
     }
 }

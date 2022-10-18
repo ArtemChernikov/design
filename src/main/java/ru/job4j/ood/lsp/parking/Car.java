@@ -5,12 +5,12 @@ import java.util.Objects;
 public abstract class Car {
     private final String model;
     private String color;
-    private final int size;
+    private String number;
 
-    public Car(String model, String color, int size) {
+    public Car(String model, String color, String number) {
         this.model = model;
         this.color = color;
-        this.size = size;
+        this.number = number;
     }
 
     public String getModel() {
@@ -26,9 +26,14 @@ public abstract class Car {
         this.color = color;
     }
 
-    public int getSize() {
-        return size;
+    public String getNumber() {
+        return number;
     }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -39,12 +44,12 @@ public abstract class Car {
             return false;
         }
         Car car = (Car) o;
-        return size == car.size && Objects.equals(model, car.model) && Objects.equals(color, car.color);
+        return Objects.equals(model, car.model) && Objects.equals(color, car.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(model, color, size);
+        return Objects.hash(model, color);
     }
 
     @Override
@@ -52,7 +57,6 @@ public abstract class Car {
         return "Car{"
                 + "model='" + model + '\''
                 + ", color='" + color + '\''
-                + ", size=" + size
                 + '}';
     }
 }
