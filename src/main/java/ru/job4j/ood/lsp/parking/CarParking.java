@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CarParking implements Parking {
-    private final Set<Car> carParking = new HashSet<>();
-    private final Set<Car> truckParking = new HashSet<>();
+    private final Set<Car> carParking;
+    private final Set<Car> truckParking;
     private final int carParkingSpaces;
     private final int truckParkingSpaces;
     private int freeCarParkingSpaces;
@@ -15,6 +15,8 @@ public class CarParking implements Parking {
 
 
     public CarParking(int carParkingSpaces, int truckParkingSpaces) {
+        carParking = new HashSet<>(carParkingSpaces);
+        truckParking = new HashSet<>(truckParkingSpaces);
         this.carParkingSpaces = carParkingSpaces;
         this.truckParkingSpaces = truckParkingSpaces;
         freeCarParkingSpaces = carParkingSpaces;
@@ -31,7 +33,6 @@ public class CarParking implements Parking {
         return false;
     }
 
-
     public int getCarParkingSpaces() {
         return carParkingSpaces;
     }
@@ -44,32 +45,16 @@ public class CarParking implements Parking {
         return freeCarParkingSpaces;
     }
 
-    public void setFreeCarParkingSpaces(int freeCarParkingSpaces) {
-        this.freeCarParkingSpaces = freeCarParkingSpaces;
-    }
-
     public int getFreeTruckParkingSpaces() {
         return freeTruckParkingSpaces;
-    }
-
-    public void setFreeTruckParkingSpaces(int freeTruckParkingSpaces) {
-        this.freeTruckParkingSpaces = freeTruckParkingSpaces;
     }
 
     public int getOccupiedCarParkingSpaces() {
         return occupiedCarParkingSpaces;
     }
 
-    public void setOccupiedCarParkingSpaces(int occupiedCarParkingSpaces) {
-        this.occupiedCarParkingSpaces = occupiedCarParkingSpaces;
-    }
-
     public int getOccupiedTruckParkingSpaces() {
         return occupiedTruckParkingSpaces;
-    }
-
-    public void setOccupiedTruckParkingSpaces(int occupiedTruckParkingSpaces) {
-        this.occupiedTruckParkingSpaces = occupiedTruckParkingSpaces;
     }
 
     public Set<Car> getCarParking() {

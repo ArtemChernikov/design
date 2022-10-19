@@ -5,7 +5,7 @@ public class Truck extends Car {
 
     public Truck(String brand, String model, String color, String number, int size) {
         super(brand, model, color, number);
-        if (size > 1) {
+        if (size > PassengerCar.SIZE) {
             this.size = size;
         } else {
             throw new IllegalArgumentException("Размер грузового автомобиля должен быть больше 1!");
