@@ -30,7 +30,7 @@ class CarParkingTest {
 
     @Test
     void when2TruckAnd2PassengerCarParking() {
-        CarParking carParking = new CarParking(2, 1);
+        CarParking carParking = new CarParking(2, 2);
         Car truck1 = new Truck("Mercedes", "SLC-SS", "Red", "GB463GE", 4);
         Car truck2 = new Truck("Volvo", "Truck-40", "Black", "UC782FG", 2);
         Car car1 = new PassengerCar("Volvo", "Q-60", "Yellow", "UC854RE");

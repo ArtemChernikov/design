@@ -15,12 +15,12 @@ public class CarParking implements Parking {
 
 
     public CarParking(int carParkingSpaces, int truckParkingSpaces) {
-        carParking = new HashSet<>(carParkingSpaces);
-        truckParking = new HashSet<>(truckParkingSpaces);
         this.carParkingSpaces = carParkingSpaces;
         this.truckParkingSpaces = truckParkingSpaces;
         freeCarParkingSpaces = carParkingSpaces;
         freeTruckParkingSpaces = truckParkingSpaces;
+        carParking = new HashSet<>(carParkingSpaces);
+        truckParking = new HashSet<>(truckParkingSpaces);
     }
 
     @Override
