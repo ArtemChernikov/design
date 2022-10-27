@@ -25,12 +25,25 @@ public class CarParking implements Parking {
 
     @Override
     public boolean addCar(Car car) {
-        return false;
-    }
-
-    @Override
-    public boolean removeCar() {
-        return false;
+        boolean rsl = false;
+        int carSize = car.getSize();
+        if (carSize == 1 && freeCarParkingSpaces > 0) {
+            carParking.add(car);
+            freeCarParkingSpaces -= 1;
+            occupiedCarParkingSpaces += 1;
+            rsl = true;
+        } else if (freeTruckParkingSpaces > 0) {
+            truckParking.add(car);
+            freeTruckParkingSpaces -= 1;
+            occupiedTruckParkingSpaces += 1;
+            rsl = true;
+        } else if (freeCarParkingSpaces >= carSize) {
+            carParking.add(car);
+            freeTruckParkingSpaces -= carSize;
+            occupiedCarParkingSpaces += carSize;
+            rsl = true;
+        }
+        return rsl;
     }
 
     public int getCarParkingSpaces() {

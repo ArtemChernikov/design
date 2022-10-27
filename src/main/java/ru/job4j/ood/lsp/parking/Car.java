@@ -8,20 +8,19 @@ public abstract class Car {
     private final String model;
     private String color;
     private String number;
+    private final int size;
 
-    private int size;
-
-    public Car(String brand, String model, String color, String number) {
+    public Car(String brand, String model, String color, String number, int size) {
         this.brand = brand;
         this.model = model;
         this.color = color;
         this.number = number;
+        this.size = size;
     }
 
     public String getModel() {
         return model;
     }
-
 
     public String getColor() {
         return color;
@@ -41,6 +40,10 @@ public abstract class Car {
 
     public String getBrand() {
         return brand;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     @Override

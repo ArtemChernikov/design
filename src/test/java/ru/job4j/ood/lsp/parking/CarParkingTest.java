@@ -1,11 +1,9 @@
 package ru.job4j.ood.lsp.parking;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 class CarParkingTest {
 
     @Test
@@ -64,9 +62,8 @@ class CarParkingTest {
     }
 
     @Test
-    void whenCreateTruckWithSizeLess1() {
+    void whenCreateTruckWithSizeEquals1() {
         assertThrows(IllegalArgumentException.class, () -> new Truck("Mercedes", "SLC-SS",
-                "Red", "GB463GE", 4));
+                "Red", "GB463GE", 1));
     }
-
 }
