@@ -6,8 +6,4 @@ public class PassengerCar extends Car {
     public PassengerCar(String brand, String model, String color, String number) {
         super(brand, model, color, number, SIZE);
     }
-
-//    public int getSize() {
-//        return SIZE;
-//    }
 }
