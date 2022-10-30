@@ -2,12 +2,32 @@ package ru.job4j.ood.lsp.parking;
 
 import java.util.Objects;
 
+/**
+ * Класс описывает модель машины
+ *
+ * @author ARTEM CHERNIKOV
+ * @version 1.0
+ */
 public abstract class Car {
-
+    /**
+     * Поле марка машины
+     */
     private final String brand;
+    /**
+     * Поле модель машины
+     */
     private final String model;
+    /**
+     * Поле цвет машины
+     */
     private String color;
+    /**
+     * Поле номер машины
+     */
     private String number;
+    /**
+     * Поле размер машины
+     */
     private final int size;
 
     public Car(String brand, String model, String color, String number, int size) {
