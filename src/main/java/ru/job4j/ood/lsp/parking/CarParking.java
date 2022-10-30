@@ -26,13 +26,13 @@ public class CarParking implements Parking {
         if (!carParking.contains(car) && !truckParking.contains(car)) {
             if (carSize == PassengerCar.SIZE && freeCarParkingSpaces > 0) {
                 carParking.add(car);
-                freeCarParkingSpaces -= 1;
-                occupiedCarParkingSpaces += 1;
+                freeCarParkingSpaces -= PassengerCar.SIZE;
+                occupiedCarParkingSpaces += PassengerCar.SIZE;
                 rsl = true;
             } else if (carSize > PassengerCar.SIZE && freeTruckParkingSpaces > 0) {
                 truckParking.add(car);
-                freeTruckParkingSpaces -= 1;
-                occupiedTruckParkingSpaces += 1;
+                freeTruckParkingSpaces -= PassengerCar.SIZE;
+                occupiedTruckParkingSpaces += PassengerCar.SIZE;
                 rsl = true;
             } else if (freeCarParkingSpaces >= carSize) {
                 carParking.add(car);
