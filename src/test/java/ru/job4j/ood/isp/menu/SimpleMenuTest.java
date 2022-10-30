@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-@Disabled
 class SimpleMenuTest {
 
     public static final ActionDelegate STUB_ACTION = System.out::println;
@@ -32,4 +30,5 @@ class SimpleMenuTest {
                 .isEqualTo(menu.select("Покормить собаку").get());
         menu.forEach(i -> System.out.println(i.getNumber() + i.getName()));
     }
+
 }

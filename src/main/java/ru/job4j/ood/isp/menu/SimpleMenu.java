@@ -9,7 +9,7 @@ public class SimpleMenu implements Menu {
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
         boolean rsl = false;
-        if (parentName == null) {
+        if (Objects.equals(parentName, ROOT)) {
             rootElements.add(new SimpleMenuItem(childName, actionDelegate));
             rsl = true;
         } else {
@@ -41,7 +41,13 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-        return (Iterator) new DFSIterator();
+        List<MenuItemInfo> list = new ArrayList<>();
+        DFSIterator dfsIterator = new DFSIterator();
+        while (dfsIterator.hasNext()) {
+            ItemInfo item = dfsIterator.next();
+            list.add(new MenuItemInfo(item.menuItem, item.number));
+        }
+        return list.listIterator();
     }
 
     private Optional<ItemInfo> findItem(String name) {
