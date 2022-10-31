@@ -33,6 +33,7 @@ public class SimpleMenu implements Menu {
             MenuItemInfo menuItemInfo = new MenuItemInfo(itemInfo.menuItem.getName(),
                     itemInfo.menuItem.getChildren().stream().map(MenuItem::getName).collect(Collectors.toList()),
                     itemInfo.menuItem.getActionDelegate(), itemInfo.number);
+            menuItemInfo.getActionDelegate().delegate();
             rsl = Optional.of(menuItemInfo);
         }
         return rsl;
