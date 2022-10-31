@@ -13,11 +13,10 @@ public class SimpleMenu implements Menu {
             rootElements.add(new SimpleMenuItem(childName, actionDelegate));
             rsl = true;
         } else {
-            MenuItem item = new SimpleMenuItem(childName, actionDelegate);
             Optional<ItemInfo> optional = findItem(parentName);
             if (optional.isPresent()) {
                 ItemInfo parent = optional.get();
-                parent.menuItem.getChildren().add(item);
+                parent.menuItem.getChildren().add(new SimpleMenuItem(childName, actionDelegate));
                 rootElements.add(parent.menuItem);
                 rsl = true;
             }

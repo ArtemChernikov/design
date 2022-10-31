@@ -1,11 +1,11 @@
 package ru.job4j.ood.isp.menu;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 class SimpleMenuTest {
 
     public static final ActionDelegate STUB_ACTION = System.out::println;
@@ -29,6 +29,18 @@ class SimpleMenuTest {
                 "Покормить собаку", List.of(), STUB_ACTION, "2."))
                 .isEqualTo(menu.select("Покормить собаку").get());
         menu.forEach(i -> System.out.println(i.getNumber() + i.getName()));
+    }
+
+    @Test
+    public void whenMenuPrint() {
+        Menu menu = new SimpleMenu();
+        MenuPrinter printer = new Printer();
+        menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
+        menu.add(Menu.ROOT, "Покормить собаку", STUB_ACTION);
+        menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION);
+        menu.add("Купить продукты", "Купить хлеб", STUB_ACTION);
+        menu.add("Купить продукты", "Купить молоко", STUB_ACTION);
+        printer.print(menu);
     }
 
 }
