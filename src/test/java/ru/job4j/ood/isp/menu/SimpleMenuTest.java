@@ -51,29 +51,22 @@ class SimpleMenuTest {
                 ----1.1.1.Купить хлеб
                 ----1.1.2.Купить молоко
                 2.Покормить собаку
-                3.Сходить в магазин
-                --3.1.Купить продукты
-                ----3.1.1.Купить хлеб
-                ----3.1.2.Купить молоко
-                4.Купить продукты
-                --4.1.Купить хлеб
-                --4.2.Купить молоко
-                5.Купить продукты
-                --5.1.Купить хлеб
-                --5.2.Купить молоко
                 """;
         assertThat(output.toString()).isEqualToNormalizingNewlines(expect);
     }
 
     @Test
     public void whenSelect() {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(output));
         Menu menu = new SimpleMenu();
         menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
         menu.add(Menu.ROOT, "Покормить собаку", STUB_ACTION);
-        menu.add("Сходить в магазин", "Купить продукты", new TestDelegate());
+        menu.add("Сходить в магазин", "Купить продукты", new TestAction());
         menu.add("Купить продукты", "Купить хлеб", STUB_ACTION);
         menu.add("Купить продукты", "Купить молоко", STUB_ACTION);
-        menu.select("Купить хлеб");
+        menu.select("Купить продукты");
+        String expect = "TestAction run!";
+        assertThat(output.toString()).isEqualToNormalizingWhitespace(expect);
     }
-
 }
