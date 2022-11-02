@@ -1,9 +1,9 @@
 package ru.job4j.ood.isp.menu;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class TODOApp {
+    public static final ActionDelegate STUB_ACTION = System.out::println;
     public static final String MENU =
             """
                     Введите 1 для добавления новой задачи;
@@ -22,16 +22,10 @@ public class TODOApp {
     public static final String SUBTASK_NOT_ADDED = "Подзадача не была добавлена";
     private final Menu menu;
     private final MenuPrinter printer;
-    private final List<ActionDelegate> actions;
 
-
-    public TODOApp(Menu menu, MenuPrinter printer, List<ActionDelegate> actions) {
+    public TODOApp(Menu menu, MenuPrinter printer) {
         this.menu = menu;
         this.printer = printer;
-        if (actions.isEmpty()) {
-            throw new IllegalArgumentException("Добавьте в список действий хотя бы одно действие!");
-        }
-        this.actions = actions;
     }
 
     public void init() {
@@ -44,7 +38,7 @@ public class TODOApp {
                     case ADD_TASK:
                         System.out.println(TASK_NAME);
                         String subtask = scanner.nextLine();
-                        if (menu.add(null, subtask, getAction())) {
+                        if (menu.add(null, subtask, STUB_ACTION)) {
                             System.out.println(TASK_ADDED);
                         } else {
                             System.out.println(TASK_NOT_ADDED);
@@ -55,7 +49,7 @@ public class TODOApp {
                         String task = scanner.nextLine();
                         System.out.println(SUBTASK_NAME);
                         String subtask1 = scanner.nextLine();
-                        if (menu.add(task, subtask1, getAction())) {
+                        if (menu.add(task, subtask1, STUB_ACTION)) {
                             System.out.println(SUBTASK_ADDED);
                         } else {
                             System.out.println(SUBTASK_NOT_ADDED);
@@ -74,12 +68,8 @@ public class TODOApp {
         }
     }
 
-    private ActionDelegate getAction() {
-        return actions.get((int) (Math.random() * actions.size()));
-    }
-
     public static void main(String[] args) {
-        TODOApp app = new TODOApp(new SimpleMenu(), new Printer(), List.of(new TestAction(), new AppAction()));
+        TODOApp app = new TODOApp(new SimpleMenu(), new Printer());
         app.init();
     }
 }

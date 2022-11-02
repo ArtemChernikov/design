@@ -8,34 +8,28 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-        boolean rsl = false;
+        if (findItem(childName).isPresent()) {
+            return false;
+        }
         if (Objects.equals(parentName, ROOT)) {
             rootElements.add(new SimpleMenuItem(childName, actionDelegate));
-            rsl = true;
+            return true;
         } else {
             Optional<ItemInfo> optional = findItem(parentName);
             if (optional.isPresent()) {
                 ItemInfo parent = optional.get();
                 parent.menuItem.getChildren().add(new SimpleMenuItem(childName, actionDelegate));
-                rsl = true;
+                return true;
             }
         }
-        return rsl;
+        return false;
     }
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        Optional<MenuItemInfo> rsl = Optional.empty();
-        Optional<ItemInfo> optional = findItem(itemName);
-        if (optional.isPresent()) {
-            ItemInfo itemInfo = optional.get();
-            MenuItemInfo menuItemInfo = new MenuItemInfo(itemInfo.menuItem.getName(),
-                    itemInfo.menuItem.getChildren().stream().map(MenuItem::getName).collect(Collectors.toList()),
-                    itemInfo.menuItem.getActionDelegate(), itemInfo.number);
-            menuItemInfo.getActionDelegate().delegate();
-            rsl = Optional.of(menuItemInfo);
-        }
-        return rsl;
+        return findItem(itemName).map(x -> new MenuItemInfo(x.menuItem.getName(),
+                x.menuItem.getChildren().stream().map(MenuItem::getName).collect(Collectors.toList()),
+                x.menuItem.getActionDelegate(), x.number));
     }
 
     @Override

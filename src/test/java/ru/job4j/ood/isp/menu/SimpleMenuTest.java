@@ -57,16 +57,15 @@ class SimpleMenuTest {
 
     @Test
     public void whenSelect() {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
         Menu menu = new SimpleMenu();
         menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
         menu.add(Menu.ROOT, "Покормить собаку", STUB_ACTION);
-        menu.add("Сходить в магазин", "Купить продукты", new TestAction());
+        menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION);
         menu.add("Купить продукты", "Купить хлеб", STUB_ACTION);
         menu.add("Купить продукты", "Купить молоко", STUB_ACTION);
         menu.select("Купить продукты");
-        String expect = "TestAction run!";
-        assertThat(output.toString()).isEqualToNormalizingWhitespace(expect);
+        assertThat(new Menu.MenuItemInfo("Купить продукты",
+                List.of("Купить хлеб", "Купить молоко"), STUB_ACTION, "1.1."))
+                .isEqualTo(menu.select("Купить продукты").get());
     }
 }
