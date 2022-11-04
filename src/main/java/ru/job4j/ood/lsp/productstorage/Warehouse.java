@@ -10,7 +10,7 @@ import java.util.List;
  * В это хранилище попадают продукты только с израсходованным сроком годности менее 25%
  *
  * @author ARTEM CHERNIKOV
- * @version 1.0
+ * @version 1.1
  */
 public class Warehouse implements Store {
     private final List<Food> storage = new ArrayList<>();
@@ -29,6 +29,11 @@ public class Warehouse implements Store {
             rsl = true;
         }
         return rsl;
+    }
+
+    @Override
+    public void clearStore() {
+        storage.clear();
     }
 
     /**

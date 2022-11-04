@@ -22,6 +22,8 @@ public interface Store {
      */
     int HIGH_EXPIRATION_DATE = 100;
 
+    void clearStore();
+
     boolean add(Food food);
 
     List<Food> getStorage();

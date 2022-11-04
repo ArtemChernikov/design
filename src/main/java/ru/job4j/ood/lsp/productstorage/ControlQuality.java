@@ -1,12 +1,13 @@
 package ru.job4j.ood.lsp.productstorage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Класс описывает модель распределения продуктов по хранилищам
  *
  * @author ARTEM CHERNIKOV
- * @version 1.0
+ * @version 1.1
  */
 public class ControlQuality {
     /**
@@ -27,5 +28,15 @@ public class ControlQuality {
         for (Store store : stores) {
             store.add(food);
         }
+    }
+
+    public void resort() {
+        List<Food> temp = new ArrayList<>();
+            stores.forEach((x) -> {
+                        temp.addAll(x.getStorage());
+                        x.clearStore();
+                    }
+            );
+        temp.forEach(this::distribution);
     }
 }

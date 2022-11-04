@@ -12,7 +12,7 @@ import java.util.List;
  * годности от 75% и менее 100%, но на них делается скидка
  *
  * @author ARTEM CHERNIKOV
- * @version 1.0
+ * @version 1.1
  */
 public class Shop implements Store {
     private final List<Food> storage = new ArrayList<>();
@@ -36,6 +36,11 @@ public class Shop implements Store {
             rsl = true;
         }
         return rsl;
+    }
+
+    @Override
+    public void clearStore() {
+        storage.clear();
     }
 
     /**
