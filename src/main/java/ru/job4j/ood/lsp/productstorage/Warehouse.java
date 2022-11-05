@@ -31,6 +31,9 @@ public class Warehouse implements Store {
         return rsl;
     }
 
+    /**
+     * Метод используется для очистки хранилища с продуктами {@link Warehouse#storage}
+     */
     @Override
     public void clearStore() {
         storage.clear();

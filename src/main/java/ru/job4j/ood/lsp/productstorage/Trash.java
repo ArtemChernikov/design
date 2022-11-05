@@ -31,6 +31,9 @@ public class Trash implements Store {
         return rsl;
     }
 
+    /**
+     * Метод используется для очистки хранилища с продуктами {@link Trash#storage}
+     */
     @Override
     public void clearStore() {
         storage.clear();

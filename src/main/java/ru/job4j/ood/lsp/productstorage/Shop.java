@@ -38,6 +38,9 @@ public class Shop implements Store {
         return rsl;
     }
 
+    /**
+     * Метод используется для очистки хранилища с продуктами {@link Shop#storage}
+     */
     @Override
     public void clearStore() {
         storage.clear();

@@ -30,13 +30,16 @@ public class ControlQuality {
         }
     }
 
+    /**
+     * Метод используется для пересортировки продуктов, находящихся в хранилищах
+     */
     public void resort() {
         List<Food> temp = new ArrayList<>();
-            stores.forEach((x) -> {
-                        temp.addAll(x.getStorage());
-                        x.clearStore();
-                    }
-            );
+        stores.forEach((x) -> {
+                    temp.addAll(x.getStorage());
+                    x.clearStore();
+                }
+        );
         temp.forEach(this::distribution);
     }
 }
