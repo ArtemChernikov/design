@@ -69,7 +69,7 @@ public class TODOApp {
     }
 
     public static void main(String[] args) {
-        TODOApp app = new TODOApp(new SimpleMenu(), new Printer());
+        TODOApp app = new TODOApp(new SimpleMenu(), new ConsoleMenuPrinter());
         app.init();
     }
 }

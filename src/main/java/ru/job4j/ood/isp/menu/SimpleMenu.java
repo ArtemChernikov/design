@@ -1,7 +1,6 @@
 package ru.job4j.ood.isp.menu;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SimpleMenu implements Menu {
     private final List<MenuItem> rootElements = new ArrayList<>();
@@ -27,20 +26,24 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        return findItem(itemName).map(x -> new MenuItemInfo(x.menuItem.getName(),
-                x.menuItem.getChildren().stream().map(MenuItem::getName).collect(Collectors.toList()),
-                x.menuItem.getActionDelegate(), x.number));
+        return findItem(itemName).map(x -> new MenuItemInfo(x.menuItem, x.number));
     }
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-        List<MenuItemInfo> list = new ArrayList<>();
         DFSIterator dfsIterator = new DFSIterator();
-        while (dfsIterator.hasNext()) {
-            ItemInfo item = dfsIterator.next();
-            list.add(new MenuItemInfo(item.menuItem, item.number));
-        }
-        return list.listIterator();
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return dfsIterator.hasNext();
+            }
+
+            @Override
+            public MenuItemInfo next() {
+                ItemInfo itemInfo = dfsIterator.next();
+                return new MenuItemInfo(itemInfo.menuItem, itemInfo.number);
+            }
+        };
     }
 
     private Optional<ItemInfo> findItem(String name) {

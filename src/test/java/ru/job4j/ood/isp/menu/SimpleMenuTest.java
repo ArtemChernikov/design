@@ -38,7 +38,7 @@ class SimpleMenuTest {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         System.setOut(new PrintStream(output));
         Menu menu = new SimpleMenu();
-        MenuPrinter printer = new Printer();
+        MenuPrinter printer = new ConsoleMenuPrinter();
         menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
         menu.add(Menu.ROOT, "Покормить собаку", STUB_ACTION);
         menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION);
