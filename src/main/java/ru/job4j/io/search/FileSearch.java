@@ -42,7 +42,8 @@ public class FileSearch {
                 predicate = p -> p.toString().matches(file);
                 break;
             case "mask":
-                String pattern = file.replace(".", "[.]").replace("?", ".?").replace("*", ".*");
+                String pattern = file.replace(".", "[.]").replace("?", ".?")
+                        .replace("*", ".*");
                 predicate = p -> p.toString().matches(pattern);
                 break;
             default:
