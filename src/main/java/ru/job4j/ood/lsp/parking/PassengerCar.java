@@ -11,7 +11,7 @@ public class PassengerCar extends Car {
     /**
      * Поле размер легковой машины
      */
-    static final public int SIZE = 1;
+    public static final int SIZE = 1;
 
     public PassengerCar(String brand, String model, String color, String number) {
         super(brand, model, color, number, SIZE);

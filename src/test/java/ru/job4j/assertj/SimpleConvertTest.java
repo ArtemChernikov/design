@@ -42,7 +42,7 @@ class SimpleConvertTest {
         assertThat(set).isNotNull()
                 .hasSize(3)
                 .doesNotContain("ten")
-                .containsOnly( "zero", "nine", "first");
+                .containsOnly("zero", "nine", "first");
     }
 
     @Test
