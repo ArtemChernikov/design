@@ -1,86 +1,145 @@
 package ru.job4j.collection;
 
-import org.junit.jupiter.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+class ForwardLinkedTest {
 
-public class ForwardLinkedTest {
+    private ForwardLinked<Integer> list;
 
-    @Test
-    public void whenDeleteFirst() {
-        ForwardLinked<Integer> linked = new ForwardLinked<>();
-        linked.add(1);
-        linked.deleteFirst();
-        assertThrows(NoSuchElementException.class, () -> linked.iterator().next());
+    @BeforeEach
+    public void initData() {
+        list = new ForwardLinked<>();
+        list.add(1);
+        list.add(2);
     }
 
     @Test
-    public void whenDeleteEmptyLinked() {
-        ForwardLinked<Integer> linked = new ForwardLinked<>();
-        assertThrows(NoSuchElementException.class, linked::deleteFirst);
+    void checkIteratorSimple() {
+        assertThat(list).hasSize(2);
+        list.add(3);
+        list.add(4);
+        assertThat(list).hasSize(4);
     }
 
     @Test
-    public void whenMultiDelete() {
-        ForwardLinked<Integer> linked = new ForwardLinked<>();
-        linked.add(1);
-        linked.add(2);
-        assertThat(linked.deleteFirst(), is(1));
-        Iterator<Integer> it = linked.iterator();
-        assertThat(it.next(), is(2));
+    void checkAdd() {
+        assertThat(list).containsExactly(1, 2);
+        list.add(3);
+        assertThat(list).containsExactly(1, 2, 3);
     }
 
     @Test
-    public void whenAddThenIter() {
-        ForwardLinked<Integer> linked = new ForwardLinked<>();
-        linked.add(1);
-        linked.add(2);
-        Iterator<Integer> it = linked.iterator();
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
+    void whenAddAndGet() {
+        list.add(3);
+        list.add(4);
+        assertThat(list.get(0)).isEqualTo(1);
+        assertThat(list.get(1)).isEqualTo(2);
+        assertThat(list.get(2)).isEqualTo(3);
+        assertThat(list.get(3)).isEqualTo(4);
     }
 
     @Test
-    public void whenAddAndRevertThenIter() {
-        ForwardLinked<Integer> linked = new ForwardLinked<>();
-        linked.add(1);
-        linked.add(2);
-        linked.revert();
-        Iterator<Integer> it = linked.iterator();
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(1));
+    void whenGetFromOutOfBoundThenExceptionThrown() {
+        assertThatThrownBy(() -> list.get(2))
+                .isInstanceOf(IndexOutOfBoundsException.class);
     }
 
     @Test
-    public void whenAddMoreElementsAndRevertThenIter() {
-        ForwardLinked<Integer> linked = new ForwardLinked<>();
-        linked.add(1);
-        linked.add(2);
-        linked.add(3);
-        linked.revert();
-        Iterator<Integer> it = linked.iterator();
-        assertThat(it.next(), is(3));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(1));
+    void whenGetNegateIndexThenExceptionThrown() {
+        assertThatThrownBy(() -> list.get(-1))
+                .isInstanceOf(IndexOutOfBoundsException.class);
     }
 
     @Test
-    public void whenSize0ThenReturnFalse() {
-        ForwardLinked<Integer> emptyList = new ForwardLinked<>();
-        Assertions.assertFalse(emptyList.revert());
+    void whenAddAndDeleteFirstThenOk() {
+        assertThat(list).containsExactly(1, 2);
+        list.add(3);
+        assertThat(list).containsExactly(1, 2, 3);
+        assertThat(list.deleteFirst()).isEqualTo(1);
+        assertThat(list).containsExactly(2, 3);
+        assertThat(list.deleteFirst()).isEqualTo(2);
+        assertThat(list).containsExactly(3);
     }
 
     @Test
-    public void whenSize1ThenReturnFalse() {
-        ForwardLinked<Integer> singleList = new ForwardLinked<>();
-        singleList.add(1);
-        Assertions.assertFalse(singleList.revert());
+    void whenDeleteFirstFromEmptyListThenException() {
+        ForwardLinked<Integer> list = new ForwardLinked<>();
+        assertThat(list).isEmpty();
+        assertThatThrownBy(list::deleteFirst)
+                .isInstanceOf(NoSuchElementException.class);
+    }
+
+    @Test
+    void whenAddIterHasNextTrue() {
+        Iterator<Integer> iterator = list.iterator();
+        assertThat(iterator.hasNext()).isTrue();
+    }
+
+    @Test
+    void whenHasIteratorAndAddThenHasNextExceptionThrown() {
+        Iterator<Integer> iterator = list.iterator();
+        assertThat(iterator.hasNext()).isTrue();
+        list.add(3);
+        assertThatThrownBy(iterator::hasNext)
+                .isInstanceOf(ConcurrentModificationException.class);
+    }
+
+    @Test
+    void whenHasIteratorAndAddThenNextExceptionThrown() {
+        Iterator<Integer> iterator = list.iterator();
+        assertThat(iterator.hasNext()).isTrue();
+        list.add(3);
+        assertThatThrownBy(iterator::next)
+                .isInstanceOf(ConcurrentModificationException.class);
+    }
+
+    @Test
+    void whenAddIterNextOne() {
+        Iterator<Integer> iterator = list.iterator();
+        assertThat(iterator.next()).isEqualTo(1);
+    }
+
+    @Test
+    void whenEmptyIterHashNextFalse() {
+        ForwardLinked<Integer> list = new ForwardLinked<>();
+        Iterator<Integer> iterator = list.iterator();
+        assertThat(iterator.hasNext()).isFalse();
+        assertThat(iterator.hasNext()).isFalse();
+    }
+
+    @Test
+    void whenAddIterMultiHasNextTrue() {
+        Iterator<Integer> iterator = list.iterator();
+        assertThat(iterator.hasNext()).isTrue();
+        assertThat(iterator.hasNext()).isTrue();
+    }
+
+    @Test
+    void whenAddIterNextOneNextTwo() {
+        Iterator<Integer> iterator = list.iterator();
+        assertThat(iterator.next()).isEqualTo(1);
+        assertThat(iterator.next()).isEqualTo(2);
+    }
+
+    @Test
+    void whenGetIteratorTwiceThenEveryFromBegin() {
+        Iterator<Integer> first = list.iterator();
+        assertThat(first.hasNext()).isTrue();
+        assertThat(first.next()).isEqualTo(1);
+        assertThat(first.hasNext()).isTrue();
+        assertThat(first.next()).isEqualTo(2);
+        assertThat(first.hasNext()).isFalse();
+        Iterator<Integer> second = list.iterator();
+        assertThat(second.hasNext()).isTrue();
+        assertThat(second.next()).isEqualTo(1);
+        assertThat(second.hasNext()).isTrue();
+        assertThat(second.next()).isEqualTo(2);
+        assertThat(second.hasNext()).isFalse();
     }
 }
