@@ -1,34 +1,41 @@
 package ru.job4j.collection;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.NoSuchElementException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+class SimpleStackTest {
 
-public class SimpleStackTest {
+    private SimpleStack<Integer> stack;
 
-    @Test
-    public void whenPushThenPoll() {
-        SimpleStack<Integer> stack = new SimpleStack<>();
+    @BeforeEach
+    void init() {
+        stack = new SimpleStack<>();
         stack.push(1);
-        assertThat(stack.pop(), is(1));
+        stack.push(2);
     }
 
     @Test
-    public void whenPushPollThenPushPoll() {
-        SimpleStack<Integer> stack = new SimpleStack<>();
-        stack.push(1);
-        stack.pop();
-        stack.push(2);
-        assertThat(stack.pop(), is(2));
+    void whenPushThenPoll() {
+        stack.push(3);
+        stack.push(4);
+        assertThat(stack.pop()).isEqualTo(4);
     }
 
     @Test
-    public void whenPushPushThenPollPoll() {
-        SimpleStack<Integer> stack = new SimpleStack<>();
-        stack.push(1);
-        stack.push(2);
+    void whenPushPollThenPushPoll() {
         stack.pop();
-        assertThat(stack.pop(), is(1));
+        stack.push(3);
+        assertThat(stack.pop()).isEqualTo(3);
+    }
+
+    @Test
+    void whenPushPushThenPollPoll() {
+        stack.pop();
+        assertThat(stack.pop()).isEqualTo(1);
+        assertThatThrownBy(stack::pop)
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
